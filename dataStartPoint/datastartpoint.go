@@ -1,5 +1,5 @@
 package dataStartPoint
 
-const Root = 0x3
-const ExamRoot = 0x2
-const UserRoot = 0x1
+const Root = 0x1
+const ExamRoot = 0x3
+const UserRoot = 0x2

@@ -1,0 +1,9 @@
+{
+  set{
+    _:r <name> "root" .
+    _:ur <name> "userRoot" .
+    _:er <name> "examRoot" .
+    _:r <child>  _:ur .
+    _:r <child> _:er .
+  }
+}

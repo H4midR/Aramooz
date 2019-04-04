@@ -15,7 +15,7 @@
                         </span>
                         </v-tooltip>
                     </v-toolbar>
-                
+
                     <v-card-text>
                         <v-flex xs11>
                             <v-text-field v-model="fullname" type="text" label="نام و نام خانوادگی"></v-text-field>
@@ -60,7 +60,7 @@ export default {
                 password:this.password,
                 fullname:this.fullname,
                 email:this.email,
-                phone:this.phone 
+                phone:this.phone
             }))
 
         }

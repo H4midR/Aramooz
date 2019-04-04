@@ -18,19 +18,13 @@
 
                     <v-card-text>
                         <v-flex xs11>
-                            <v-text-field v-model="fullname" type="text" label="نام و نام خانوادگی"></v-text-field>
+                            <v-text-field v-model="name" type="text" label="نام و نام خانوادگی"></v-text-field>
                         </v-flex>
                         <v-flex xs11>
-                            <v-text-field v-model="username" type="text" label="نام کاربری"></v-text-field>
+                            <v-text-field v-model="mobile" type="text" label="نام کاربری"></v-text-field>
                         </v-flex>
                         <v-flex xs11>
                             <v-text-field v-model="password" type="password" label="کلمه عبور"></v-text-field>
-                        </v-flex>
-                        <v-flex xs11>
-                            <v-text-field v-model="email" type="email" label="ایمیل"></v-text-field>
-                        </v-flex>
-                        <v-flex xs11>
-                            <v-text-field v-model="phone" type="phone" label="تلفن"></v-text-field>
                         </v-flex>
                     </v-card-text>
                     <v-card-actions>
@@ -47,11 +41,9 @@
 export default {
     data(){return{
         axios:require('axios'),
-        username:null,
+        mobile:null,
         password:null,
-        fullname:null,
-        email:null,
-        phone:null
+        name:null,
     }},
     methods:{
         signup(){
@@ -62,11 +54,9 @@ export default {
             password
             */
             this.axios.post("http://localhost:9090/user",JSON.stringify({
-                username:this.username,
+                mobile:this.mobile,
                 password:this.password,
-                fullname:this.fullname,
-                email:this.email,
-                phone:this.phone
+                name:this.name,
             }))
 
         }

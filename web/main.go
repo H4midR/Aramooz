@@ -3,8 +3,8 @@ package main
 /* i javad */
 /*eslint-disable */
 import (
-	"Aramooz/Controllers"
-	"Aramooz/DataBaseServices"
+	"Aramooz/dataBaseServices"
+	"Aramooz/web/controllers"
 
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
@@ -37,7 +37,7 @@ func main() {
 	})
 
 	//mvc.New(app.Party("/user", crs)).Handle(new(controllers.UserController))
-	mvc.New(app.Party("/user", crs)).Handle(new(Controllers.UserController))
+	mvc.New(app.Party("/user", crs)).Handle(new(controllers.UserController))
 
 	//dg := newClient()
 	//txn := dg.NewTxn()
@@ -45,7 +45,7 @@ func main() {
 	// Method:   GET
 	// Resource: http://localhost:8080
 	app.Handle("GET", "/", func(ctx iris.Context) {
-		mg := DataBaseServices.NewDgraphTrasn()
+		mg := dataBaseServices.NewDgraphTrasn()
 		q := `
 			{
 				data(func:has(name)){

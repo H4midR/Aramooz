@@ -1,6 +1,6 @@
 // file: services/movie_service.go
 /*eslint-disable */
-package DataBaseServices
+package dataBaseServices
 
 import (
 	"context"

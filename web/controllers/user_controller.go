@@ -1,9 +1,10 @@
-package Controllers
+package controllers
 
 import (
-	"Aramooz/DataBaseServices"
-	"Aramooz/Services/Response"
+	db "Aramooz/dataBaseServices"
+
 	"Aramooz/dataModels"
+	"Aramooz/services/response"
 	"encoding/json"
 
 	"github.com/kataras/iris"
@@ -21,9 +22,9 @@ func (c *UserController) Get(ctx iris.Context) {
 }
 
 //Post : post /user/ : add new user
-func (c *UserController) Post(ctx iris.Context) Response.Response {
+func (c *UserController) Post(ctx iris.Context) response.Response {
 	var req dataModels.User
-	var res Response.Response
+	var res response.Response
 	err := ctx.ReadJSON(&req)
 
 	res.HandleErr(err)
@@ -31,7 +32,7 @@ func (c *UserController) Post(ctx iris.Context) Response.Response {
 		return res
 	}
 	req.Kind = dataModels.UserType
-	mgt := DataBaseServices.NewDgraphTrasn()
+	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)
 	res.HandleErr(err)
 	if res.Code < 1 {

@@ -4,7 +4,7 @@ package main
 /*eslint-disable */
 import (
 	"Aramooz/Controllers"
-	"DgraphDB/DataBaseServices"
+	"Aramooz/DataBaseServices"
 
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"

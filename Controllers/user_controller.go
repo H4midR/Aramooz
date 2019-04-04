@@ -3,6 +3,7 @@ package Controllers
 import (
 	"Aramooz/DataBaseServices"
 	"Aramooz/dataModels"
+	"encoding/json"
 
 	"github.com/kataras/iris"
 )
@@ -27,7 +28,11 @@ func (c *UserController) Post(ctx iris.Context) interface{} {
 	}
 	req.Kind = dataModels.UserType
 	mgt := DataBaseServices.NewDgraphTrasn()
-	_, Uids, err := mgt.Mutate(req)
+	q, err := json.Marshal(req)
+	if err != nil {
+		return err
+	}
+	_, Uids, err := mgt.Mutate(q)
 	if err != nil {
 		return err
 	}

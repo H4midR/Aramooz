@@ -3,12 +3,15 @@ package main
 /* i javad */
 /*eslint-disable */
 import (
-	"github.com/kataras/iris"
-
+	"Aramooz/Controllers"
 	"DgraphDB/DataBaseServices"
+
+	"github.com/iris-contrib/middleware/cors"
+	"github.com/kataras/iris"
 
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
+	"github.com/kataras/iris/mvc"
 )
 
 // JAVAD TISHE
@@ -26,14 +29,15 @@ func main() {
 
 	//app.StaticWeb("/public", "./web/public")
 
-	// crs := cors.New(cors.Options{
-	// 	AllowedOrigins:   []string{"*"},
-	// 	AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"},
-	// 	AllowedHeaders:   []string{"Accept", "X-USER", "content-type", "X-Requested-With", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization", "Authorization-Token", "Screen"},
-	// 	AllowCredentials: true,
-	// })
+	crs := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"},
+		AllowedHeaders:   []string{"Accept", "X-USER", "content-type", "X-Requested-With", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization", "Authorization-Token", "Screen"},
+		AllowCredentials: true,
+	})
 
 	//mvc.New(app.Party("/user", crs)).Handle(new(controllers.UserController))
+	mvc.New(app.Party("/user", crs)).Handle(new(Controllers.UserController))
 
 	//dg := newClient()
 	//txn := dg.NewTxn()

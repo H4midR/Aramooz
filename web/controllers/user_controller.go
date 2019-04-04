@@ -10,18 +10,32 @@ import (
 	"github.com/kataras/iris"
 )
 
+//UserController : http://URL:9090/user
 type UserController struct {
 }
+
+//
+// ──────────────────────────────────────────────── I ──────────
+//   :::::: U S E R : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────
+//
+
+// ─── CURD ───────────────────────────────────────────────────────────────────────
 
 //Options : for allow crs
 func (c *UserController) Options(ctx iris.Context) {}
 
-//Get : get /user/
+//Get : get /user/ : show user data
+//TODO: 0% -
+// ? headers:(X-USER,TOKEN)
 func (c *UserController) Get(ctx iris.Context) {
-
 }
 
 //Post : post /user/ : add new user
+//TODO: 50% -
+// *TODO : uniq user checking , recaptcha , required param checking , ...
+// ? headers:(NULL)
+// ? @Params(mobile,password,name)
 func (c *UserController) Post(ctx iris.Context) response.Response {
 	var req dataModels.User
 	var res response.Response
@@ -46,4 +60,16 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	res.Data = Uids
 	return res
 
+}
+
+//Put : Put /user/ : edit a user
+//TODO: 0% -
+// ? headers:(X-USER,TOKEN)
+func (c *UserController) Put(ctx iris.Context) {
+}
+
+//Delete : get /user/ : delete a user (delete account && adminSuperDelete)
+//TODO: 0% -
+// ?headers:(X-USER,TOKEN)
+func (c *UserController) Delete(ctx iris.Context) {
 }

@@ -1,6 +1,9 @@
 <template>
     <v-container fluid full-height>
         <v-layout  fluid justify-space-around align-center>
+          <v-flex xs12>
+            {{response}}
+          </v-flex>
             <v-flex xs12 md5>
                 <v-card xs12 md5>
                     <v-toolbar color="pink darken-3" dark>
@@ -44,6 +47,7 @@ export default {
         mobile:null,
         password:null,
         name:null,
+        response:null,
     }},
     methods:{
         signup(){
@@ -57,7 +61,9 @@ export default {
                 mobile:this.mobile,
                 password:this.password,
                 name:this.name,
-            }))
+            })).then(res=>{
+              this.response=res.data.Message
+            })
 
         }
     }

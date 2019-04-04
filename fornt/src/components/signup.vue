@@ -55,7 +55,13 @@ export default {
     }},
     methods:{
         signup(){
-            this.axios.post("http://localhost:8585/user/signup",JSON.stringify({
+            /*
+            required
+            name
+            mobile
+            password
+            */
+            this.axios.post("http://localhost:9090/user",JSON.stringify({
                 username:this.username,
                 password:this.password,
                 fullname:this.fullname,

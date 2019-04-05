@@ -8,7 +8,7 @@
                 فرم ورود
                 <v-spacer></v-spacer>
                 <v-tooltip top>
-                  <v-btn color="primary darken-3" slot="activator" flat icon @click.native="$router.push('/signup')">
+                  <v-btn color="primary darken-3" slot="activator" flat icon router to="signup"> <!-- @click.native="$router.push('/signup')" -->
                     <v-icon>mdi-account-plus</v-icon>
                   </v-btn>
                   <span>

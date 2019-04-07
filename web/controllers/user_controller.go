@@ -2,6 +2,8 @@ package controllers
 
 import (
 	db "Aramooz/dataBaseServices"
+	"errors"
+	"fmt"
 
 	"Aramooz/dataModels"
 	"Aramooz/services/response"
@@ -46,6 +48,30 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 		return res
 	}
 	req.Kind = dataModels.UserType
+	m := db.NewDgraphTrasn()
+	dbStrRes, err := m.Query(fmt.Sprintf(`
+		{
+			data(func:eq(mobile,"%s")){
+				uid
+			}
+		}
+	`, req.Mobile))
+	if res.HandleErr(err) {
+		return res
+	}
+	var dbStc struct {
+		Data []struct {
+			Uid string `json:"uid"`
+		} `json:"data"`
+	}
+	err = json.Unmarshal(dbStrRes, &dbStc)
+	if res.HandleErr(err) {
+		return res
+	}
+	if len(dbStc.Data) > 0 {
+		res.HandleErr(errors.New("قبلا کاربری با این شماره موبایل ثبت نام کرده است."))
+		return res
+	}
 	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)
 	res.HandleErr(err)
@@ -66,6 +92,7 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 //TODO: 0% -
 // ? headers:(X-USER,TOKEN)
 func (c *UserController) Put(ctx iris.Context) {
+	//UUID := ctx.GetHeader("X-USER")
 }
 
 //Delete : get /user/ : delete a user (delete account && adminSuperDelete)

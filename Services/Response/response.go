@@ -8,16 +8,18 @@ type Response struct {
 	Data    interface{} `json:"Data,omitempry"`
 }
 
-func (r *Response) HandleErr(err error) {
+func (r *Response) HandleErr(err error) bool {
 	if err != nil {
 		r.State = -1
 		r.Code = -1
 		r.Message = err.Error()
 		r.Data = err
+		return true
 	} else {
 		r.State = 1
 		r.Code = 1
 		r.Message = "OK"
-
+		return false
 	}
+
 }

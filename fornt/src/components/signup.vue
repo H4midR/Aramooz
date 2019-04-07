@@ -38,7 +38,7 @@
                             <span>ثبت نام در سایت</span>
                         </v-tooltip>
                     </v-card-actions>
-                
+
                     <v-snackbar v-model="snackbar" color="success" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" >
                     {{ response }}
                     <v-btn right flat fab @click="snackbar = false">
@@ -53,6 +53,17 @@
 <script>
 export default {
     data(){return{
+      /*
+      axios:require('axios').create({
+              baseURL: 'http://localhost:9090/',
+              timeout: 1000,
+              withCredentials: false,
+              headers:{
+                'Authorization-Token':this.myuser.token,
+                'X-USER':this.myuser.uid
+              }
+            }),
+          */
         axios:require('axios'),
         mobile:null,
         password:null,
@@ -83,7 +94,7 @@ export default {
             mobile
             password
             */
-           
+
 
             this.axios.post("http://localhost:9090/user",JSON.stringify({
                 mobile:this.mobile,

@@ -8,7 +8,7 @@ import (
 // helper functions
 
 func Tokengenerator() string {
-	b := make([]byte, 8)
+	b := make([]byte, 32)
 	rand.Read(b)
 	return fmt.Sprintf("%x", b)
 }

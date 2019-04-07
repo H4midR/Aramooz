@@ -11,14 +11,14 @@ import (
 	
 )
 
-type QuestionController struct{
+type ExamController struct{
 
 }
 
-func(c *QuestionController) Get (ctx iris.context){}
-func(c *QuestionController) Options (ctx iris.context){}
-func(c *QuestionController) Post (ctx iris.context) response.Response {
-	var req dataModels.Question
+func(c *ExamController) Get (ctx iris.context){}
+func(c *ExamController) Options (ctx iris.context){}
+func(c *ExamController) Post (ctx iris.context) response.Response {
+	var req dataModels.Exam
 	var res response.Response
 	err := ctx.ReadJSON(&req)
 
@@ -26,7 +26,7 @@ func(c *QuestionController) Post (ctx iris.context) response.Response {
 	if res.Code < 1 {
 		return res
 	}
-	req.Kind = dataModels.QType
+	req.Kind = dataModels.EType
 	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)
 	res.HandleErr(err)
@@ -41,5 +41,5 @@ func(c *QuestionController) Post (ctx iris.context) response.Response {
 	res.Data = Uids
 	return res
 }
-func(c *QuestionController) Put (ctx iris.context){}
-func(c *QuestionController) Delete (ctx iris.context){}
+func(c *ExamController) Put (ctx iris.context){}
+func(c *ExamController) Delete (ctx iris.context){}

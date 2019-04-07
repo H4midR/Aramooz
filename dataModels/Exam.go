@@ -7,4 +7,4 @@ type Exam struct{
 	Status	string `json:"status,omitempty" form:"Status"`
 }
 
-const QType = "Exam"
+const EType = "Exam"

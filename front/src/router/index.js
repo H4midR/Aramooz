@@ -6,6 +6,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/login'
 import signup from '@/components/signup'
 import addExam from '@/components/addExam'
+import addQuestion from '@/components/addQuestion'
 
 Vue.use(Router)
 
@@ -30,7 +31,7 @@ export default new Router({
     }
     ,
     {
-      path : '/addQuestion',
+      path : '/addquestion',
       component: addQuestion
     }
   ]

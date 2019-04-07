@@ -12,6 +12,7 @@ import addMore from "highcharts/highcharts-more";
 import loadExporting from 'highcharts/modules/exporting';
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
+import '@/assets/css/fonts.css'
 
 
 Vue.use(Vuetify,{

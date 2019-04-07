@@ -70,6 +70,7 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	}
 	if len(dbStc.Data) > 0 {
 		res.HandleErr(errors.New("قبلا کاربری با این شماره موبایل ثبت نام کرده است."))
+		return res
 	}
 	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)

@@ -18,7 +18,7 @@
     </v-layout>
     <v-layout row wrap>
         <v-flex >
-            <v-btn @click="addQ"></v-btn>
+            <v-btn @click="addExam"></v-btn>
         </v-flex>
 
     </v-layout>
@@ -34,7 +34,7 @@ export default {
         response:null,
     }},
     methods:{
-        addQ(){
+        addExam(){
             this.axios.post("",JSON.stringify({
                 title:this.title,
                 cost:this.cost,

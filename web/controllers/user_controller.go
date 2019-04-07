@@ -48,6 +48,10 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 		return res
 	}
 	req.Kind = dataModels.UserType
+	//
+	// ──────────────────────────────── CHEACK NO OTHER USER WITH THE SAME MOBILE ─────
+	//
+
 	m := db.NewDgraphTrasn()
 	dbStrRes, err := m.Query(fmt.Sprintf(`
 		{
@@ -72,6 +76,11 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 		res.HandleErr(errors.New("قبلا کاربری با این شماره موبایل ثبت نام کرده است."))
 		return res
 	}
+
+	//
+	// ───────────────────────────────────────────────────── ADD USER TO DATABASE ─────
+	//
+
 	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)
 	res.HandleErr(err)

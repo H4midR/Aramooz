@@ -23,6 +23,10 @@ export default new Router({
     {
       path : '/signup',
       component: signup
+    },
+    {
+      path : '/addQuestion',
+      component: addQuestion
     }
     ,
     {

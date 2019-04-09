@@ -17,7 +17,8 @@ Mahdi
                 <!--<v-list-tile-title :class=" (choicesArray.dir=='rtl') ? 'text-xs-right': 'text-xs-left' >-->
                 <v-list-tile-title class="add-question-option" >
                   <!--<v-text-field :counter="100" :label="'گزینه '+(n+1)" required></v-text-field>-->
-                  <v-checkbox v-modal="choice.value" hide-details class="shrink mr-2"></v-checkbox>
+                  {{choice.value}}
+                  <v-checkbox v-model="choice.value" hide-details class="shrink mr-2"></v-checkbox>
                 </v-list-tile-title>
               </v-list-tile-content>
         </v-list-tile>
@@ -37,8 +38,8 @@ props:{
     editingProp:Boolean,
 },
 updated(){
-}
-,
+  alert('child updated');
+},
 methods:{
   addingOption(){
     this.$emit('addOption')

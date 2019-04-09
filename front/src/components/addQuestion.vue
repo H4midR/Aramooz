@@ -35,7 +35,7 @@ return{
     emptyChoice:{
             num:0,
             title:'',
-            value:0
+            value:false
         },
     emptyQuestion:{
         title:'',
@@ -43,11 +43,16 @@ return{
         choices:[{
             num:0,
             title:'1',
-            value:true
+            value:false
         }]
     },
     editingQuestion:{}
 }
+},
+watch:{
+    editingQuestion:function(val){
+        console.log(this.editingQuestion);
+    }
 },
 mounted(){
     if(this.editing){
@@ -56,6 +61,7 @@ mounted(){
         this.editingQuestion=this.emptyQuestion
 }
 ,
+
 methods:{
     addOption2question(){
         this.editingQuestion.choices.push(this.emptyChoice)
@@ -63,11 +69,14 @@ methods:{
     checkboxChenged(val){
         
     var item_index=this.editingQuestion.choices.indexOf(val);
-    if((this.editingQuestion.choices[item_index].value)){
+    console.log(this.editingQuestion.choices[item_index]);
+    if((this.editingQuestion.choices[item_index].value)==false){
         this.editingQuestion.choices[item_index].value=true;
+        console.log('changed_'+this.editingQuestion.choices[item_index].value);
     }else{
         this.editingQuestion.choices[item_index].value=false;
     }
+    
     }
 },
 components:{

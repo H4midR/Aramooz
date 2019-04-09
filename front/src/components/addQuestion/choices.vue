@@ -25,8 +25,6 @@
 export default {
   data(){
     return{
-      //choicesArray:[],
-      //editingProp:false,
     }
   },
 props:{

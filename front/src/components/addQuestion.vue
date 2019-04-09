@@ -25,7 +25,6 @@
         </v-layout>
     </v-container>
 </template>
-
 <script>
 import choices from '@/components/addQuestion/choices'
 export default {
@@ -56,9 +55,7 @@ mounted(){
     }else
         this.editingQuestion= Object.assign({},this.emptyQuestion)
     this.numberOfChoices=(this.editingQuestion.choices.length);
-}
-,
-
+},
 methods:{
     addOption2question(){
         var oneChoice=Object.assign({},this.emptyChoice);

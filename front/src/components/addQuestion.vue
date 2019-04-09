@@ -3,7 +3,7 @@
         <v-layout class="add-question-form" justify-center>
             <v-flex xs12 sm11 md10 lg8>
                 <v-card>
-                    <v-toolbar class="light-blue lighten-1" >
+                    <v-toolbar class="pink" >
                         <v-icon color="white">help</v-icon>
                         &nbsp;<span class="white--text " >افزودن سوال</span>
                     </v-toolbar>

@@ -1,24 +1,21 @@
 <template>
-    <div v-if="editingProp">
-Mahdi
-    </div>
-    <div v-else >
-      <v-btn @click="addingOption()" flat class="success">
+    <div  >
+      {{choicesCount}}
+      <v-btn @click="addingOption()" flat class="success" v-if="(choicesCount<3)">
         <v-icon class="margin-left-10">add_circle</v-icon>
-        افزودن گزینه</v-btn>
-        <v-list-tile v-for="(choice,n) in choicesArray" :key="'ch_'+n" class="add-question-choices">
+        افزودن گزینه
+      </v-btn>
+        <v-list-tile v-for="choice in choicesArray" :key="'ch_'+choice.num" class="add-question-choices">
               <v-list-tile-avatar>
 
-                <v-btn small depressed color="info" fab @click="selectCheckbox(choice)">
-                  {{n+1}}
+                <v-btn small depressed :color="(choice.value)? 'success':'info'" fab @click="selectCheckbox(choice)">
+                  {{choice.num}}
                 </v-btn>
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <!--<v-list-tile-title :class=" (choicesArray.dir=='rtl') ? 'text-xs-right': 'text-xs-left' >-->
                 <v-list-tile-title class="add-question-option" >
-                  <!--<v-text-field :counter="100" :label="'گزینه '+(n+1)" required></v-text-field>-->
-                  {{choice.value}}
-                  <v-checkbox v-model="choice.value" hide-details class="shrink mr-2"></v-checkbox>
+                  <v-text-field :counter="100" :label="'گزینه '+(choice.num)" required></v-text-field>
                 </v-list-tile-title>
               </v-list-tile-content>
         </v-list-tile>
@@ -29,6 +26,7 @@ Mahdi
 export default {
   data(){
     return{
+      choicesCount:0
       //choicesArray:[],
       //editingProp:false,
     }
@@ -37,16 +35,19 @@ props:{
     choicesArray:Array,
     editingProp:Boolean,
 },
-updated(){
-  alert('child updated');
+computed:{
+  choicesCount:function(){
+
+  }
 },
 methods:{
   addingOption(){
     this.$emit('addOption')
   }
   ,
-  selectCheckbox(val){
-    this.$emit('checkboxClicked',val);
+  selectCheckbox(item){
+    //console.log(item);
+    this.$emit('checkboxClicked',item);
   }
 }
 }

@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        {{editingQuestion}}
         <v-layout class="add-question-form" justify-center>
             <v-flex xs12 sm11 md10 lg8>
                 <v-card>
@@ -41,18 +42,13 @@ return{
         title:'',
         rank:0,
         choices:[{
-            num:0,
+            num:1,
             title:'1',
             value:false
         }]
     },
     editingQuestion:{}
 }
-},
-watch:{
-    editingQuestion:function(val){
-        console.log(this.editingQuestion);
-    }
 },
 mounted(){
     if(this.editing){
@@ -64,19 +60,22 @@ mounted(){
 
 methods:{
     addOption2question(){
-        this.editingQuestion.choices.push(this.emptyChoice)
+        var oneChoice=this.emptyChoice;
+        var lengthOfChoices=(this.editingQuestion.choices.length)+1;
+        oneChoice.title=lengthOfChoices.toString();
+        oneChoice.num=lengthOfChoices;
+        console.log(this.editingQuestion.choices.push(oneChoice));
+        //this.emptyChoice.title='';
     },
-    checkboxChenged(val){
-        
-    var item_index=this.editingQuestion.choices.indexOf(val);
-    console.log(this.editingQuestion.choices[item_index]);
+    checkboxChenged(item){
+    //console.log(item);
+    var item_index=this.editingQuestion.choices.indexOf(item);
+    //console.log(this.item_index);
     if((this.editingQuestion.choices[item_index].value)==false){
         this.editingQuestion.choices[item_index].value=true;
-        console.log('changed_'+this.editingQuestion.choices[item_index].value);
     }else{
         this.editingQuestion.choices[item_index].value=false;
     }
-    
     }
 },
 components:{

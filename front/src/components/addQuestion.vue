@@ -10,15 +10,15 @@
                     <v-card-title primary-title>
                         <v-layout>
                             <v-flex xs12 sm2 md2 lg2>
-                                <v-text-field style="margin-left:10px;" label="شماره سوال" required ></v-text-field>
+                                <v-text-field style="margin-left:10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                             </v-flex>
                             <v-flex xs12 sm10 md10 lg10>
-<v-text-field :counter="200" label="عنوان سوال" required></v-text-field>
+<v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-card-title>
                     <v-card-text>
-<choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" :editingProp="editing" @addOption="addOption2question" @checkboxClicked="checkboxChenged"></choices>
+<choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -37,8 +37,8 @@ return{
             value:false
         },
     emptyQuestion:{
-        title:'',
-        rank:0,
+        title:null,
+        qnum:null,
         choices:[{
             num:1,
             title:'1',
@@ -49,23 +49,36 @@ return{
     numberOfChoices:0,
 }
 },
+/*
+editing: true | false ==> editing a question or add new one?
+item2edit => Which item is being edited?
+
+props:{
+editing:Boolean,
+item2edit:Object,
+},*/
 mounted(){
     if(this.editing){
-
+        this.editingQuestion= Object.assign({},item2edit)
     }else
         this.editingQuestion= Object.assign({},this.emptyQuestion)
     this.numberOfChoices=(this.editingQuestion.choices.length);
 },
 methods:{
-    addOption2question(){
+    optionAdded(){
         var oneChoice=Object.assign({},this.emptyChoice);
-        var lengthOfChoices=(this.editingQuestion.choices.length)+1;
-        oneChoice.title=lengthOfChoices.toString();
-        oneChoice.num=lengthOfChoices;
+        var lengthOfChoices=this.editingQuestion.choices.length;
+        oneChoice.num=(this.editingQuestion.choices[lengthOfChoices-1].num)+1;
         this.editingQuestion.choices.push(oneChoice);
-        this.numberOfChoices=lengthOfChoices;
+        this.numberOfChoices=(this.editingQuestion.choices.length);
     },
-    checkboxChenged(item){
+    itemDeleted(item){
+var item_index=this.editingQuestion.choices.indexOf(item);
+confirm('این عمل قابل برگشت نمی باشد، آیا مطمئن هستید؟') && this.editingQuestion.choices.splice(item_index, 1)
+var lengthOfChoices=(this.editingQuestion.choices.length);
+this.numberOfChoices=lengthOfChoices;
+    },
+    itemSelected(item){
     var item_index=this.editingQuestion.choices.indexOf(item);
     if((this.editingQuestion.choices[item_index].value)==false){
         this.editingQuestion.choices[item_index].value=true;

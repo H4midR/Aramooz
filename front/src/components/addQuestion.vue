@@ -54,23 +54,21 @@ mounted(){
     if(this.editing){
 
     }else
-        this.editingQuestion=this.emptyQuestion
+        
+        this.editingQuestion= Object.assign({},this.emptyQuestion)
 }
 ,
 
 methods:{
     addOption2question(){
-        var oneChoice=this.emptyChoice;
+        var oneChoice=Object.assign({},this.emptyChoice);
         var lengthOfChoices=(this.editingQuestion.choices.length)+1;
         oneChoice.title=lengthOfChoices.toString();
         oneChoice.num=lengthOfChoices;
-        console.log(this.editingQuestion.choices.push(oneChoice));
-        //this.emptyChoice.title='';
+        this.editingQuestion.choices.push(oneChoice)
     },
     checkboxChenged(item){
-    //console.log(item);
     var item_index=this.editingQuestion.choices.indexOf(item);
-    //console.log(this.item_index);
     if((this.editingQuestion.choices[item_index].value)==false){
         this.editingQuestion.choices[item_index].value=true;
     }else{

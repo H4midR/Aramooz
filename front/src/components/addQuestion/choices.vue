@@ -1,10 +1,5 @@
 <template>
     <div  >
-      {{choicesCount}}
-      <v-btn @click="addingOption()" flat class="success" v-if="(choicesCount<3)">
-        <v-icon class="margin-left-10">add_circle</v-icon>
-        افزودن گزینه
-      </v-btn>
         <v-list-tile v-for="choice in choicesArray" :key="'ch_'+choice.num" class="add-question-choices">
               <v-list-tile-avatar>
 
@@ -19,6 +14,10 @@
                 </v-list-tile-title>
               </v-list-tile-content>
         </v-list-tile>
+        <v-btn @click="addingOption()" :class="(choicesCount>3)? '':'success'" :disabled="(choicesCount>3)? true:false">
+          <v-icon class="margin-left-10">add_circle</v-icon>
+          افزودن گزینه
+        </v-btn>
     </div>
 </template>
 
@@ -26,7 +25,6 @@
 export default {
   data(){
     return{
-      choicesCount:0
       //choicesArray:[],
       //editingProp:false,
     }
@@ -34,19 +32,17 @@ export default {
 props:{
     choicesArray:Array,
     editingProp:Boolean,
+    choicesCount:Number
 },
 computed:{
-  choicesCount:function(){
-
-  }
+  
 },
 methods:{
   addingOption(){
-    this.$emit('addOption')
+    this.$emit('addOption');
   }
   ,
   selectCheckbox(item){
-    //console.log(item);
     this.$emit('checkboxClicked',item);
   }
 }

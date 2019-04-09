@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        {{editingQuestion}}
         <v-layout class="add-question-form" justify-center>
             <v-flex xs12 sm11 md10 lg8>
                 <v-card>
@@ -19,7 +18,7 @@
                         </v-layout>
                     </v-card-title>
                     <v-card-text>
-<choices :choicesArray="editingQuestion.choices" :editingProp="editing" @addOption="addOption2question" @checkboxClicked="checkboxChenged"></choices>
+<choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" :editingProp="editing" @addOption="addOption2question" @checkboxClicked="checkboxChenged"></choices>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -47,15 +46,16 @@ return{
             value:false
         }]
     },
-    editingQuestion:{}
+    editingQuestion:{},
+    numberOfChoices:0,
 }
 },
 mounted(){
     if(this.editing){
 
     }else
-        
         this.editingQuestion= Object.assign({},this.emptyQuestion)
+    this.numberOfChoices=(this.editingQuestion.choices.length);
 }
 ,
 
@@ -65,7 +65,8 @@ methods:{
         var lengthOfChoices=(this.editingQuestion.choices.length)+1;
         oneChoice.title=lengthOfChoices.toString();
         oneChoice.num=lengthOfChoices;
-        this.editingQuestion.choices.push(oneChoice)
+        this.editingQuestion.choices.push(oneChoice);
+        this.numberOfChoices=lengthOfChoices;
     },
     checkboxChenged(item){
     var item_index=this.editingQuestion.choices.indexOf(item);

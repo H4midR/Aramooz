@@ -9,16 +9,16 @@
                     </v-toolbar>
                     <v-card-title primary-title>
                         <v-layout>
-                            <v-flex xs12 md2>
+                            <v-flex xs12 sm2 md2 lg2>
                                 <v-text-field style="margin-left:10px;" label="شماره سوال" required ></v-text-field>
                             </v-flex>
-                            <v-flex xs12 md10>
+                            <v-flex xs12 sm10 md10 lg10>
 <v-text-field :counter="200" label="عنوان سوال" required></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-card-title>
                     <v-card-text>
-                        <choices :choicesArray="emptyQuestion.choices" :editingProp="editing" @addOption="addOption2question" ></choices>
+<choices :choicesArray="emptyQuestion.choices" :editingProp="editing" @addOption="addOption2question" :selectedOptions="checkedOptions" @checkboxClicked="checkboxChenged"></choices>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -31,6 +31,7 @@ import choices from '@/components/addQuestion/choices'
 export default {
 data(){
 return{
+    checkedOptions:[],
     editing:false,
     emptyChoice:{
             num:0,
@@ -56,6 +57,17 @@ methods:{
             
             this.emptyQuestion.choices.push(this.emptyChoice)
         }
+    },
+    checkboxChenged(val){
+        
+        if((this.checkedOptions.indexOf(val))>-1){
+        alert(1)
+this.checkedOptions.splice(val);
+    }else{
+        alert(2)
+            this.checkedOptions.push(val);
+    
+    }
     }
 },
 components:{
@@ -84,5 +96,7 @@ components:{
     height:60px;
     margin-top:5px;
 }
-
+.margin-left-10{
+    margin-left:10px;
+}
 </style>

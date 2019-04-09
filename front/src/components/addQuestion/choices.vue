@@ -14,7 +14,7 @@
                 </v-list-tile-title>
               </v-list-tile-content>
         </v-list-tile>
-        <v-btn @click="addingOption()" :class="(choicesCount>3)? '':'success'" :disabled="(choicesCount>3)? true:false">
+        <v-btn @click="addingOption()" :class="(choicesCount>3)? '':'warning lighten2'" :disabled="(choicesCount>3)? true:false">
           <v-icon class="margin-left-10">add_circle</v-icon>
           افزودن گزینه
         </v-btn>

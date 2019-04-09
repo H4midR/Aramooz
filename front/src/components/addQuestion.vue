@@ -18,7 +18,7 @@
                         </v-layout>
                     </v-card-title>
                     <v-card-text>
-<choices :choicesArray="emptyQuestion.choices" :editingProp="editing" @addOption="addOption2question" :selectedOptions="checkedOptions" @checkboxClicked="checkboxChenged"></choices>
+<choices :choicesArray="editingQuestion.choices" :editingProp="editing" @addOption="addOption2question" @checkboxClicked="checkboxChenged"></choices>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -31,7 +31,6 @@ import choices from '@/components/addQuestion/choices'
 export default {
 data(){
 return{
-    checkedOptions:[],
     editing:false,
     emptyChoice:{
             num:0,
@@ -44,29 +43,30 @@ return{
         choices:[{
             num:0,
             title:'1',
-            value:0
+            value:true
         }]
-    }    
+    },
+    editingQuestion:{}
 }
 },
+mounted(){
+    if(this.editing){
+
+    }else
+        this.editingQuestion=this.emptyQuestion
+}
+,
 methods:{
     addOption2question(){
-        if(this.editing){
-//
-        }else{
-            
-            this.emptyQuestion.choices.push(this.emptyChoice)
-        }
+        this.editingQuestion.choices.push(this.emptyChoice)
     },
     checkboxChenged(val){
         
-        if((this.checkedOptions.indexOf(val))>-1){
-        alert(1)
-this.checkedOptions.splice(val);
+    var item_index=this.editingQuestion.choices.indexOf(val);
+    if((this.editingQuestion.choices[item_index].value)){
+        this.editingQuestion.choices[item_index].value=true;
     }else{
-        alert(2)
-            this.checkedOptions.push(val);
-    
+        this.editingQuestion.choices[item_index].value=false;
     }
     }
 },

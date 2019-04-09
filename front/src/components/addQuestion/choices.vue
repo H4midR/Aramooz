@@ -9,7 +9,7 @@ Mahdi
         <v-list-tile v-for="(choice,n) in choicesArray" :key="'ch_'+n" class="add-question-choices">
               <v-list-tile-avatar>
 
-                <v-btn small depressed color="info" fab @click="selectCheckbox('ch_'+n)">
+                <v-btn small depressed color="info" fab @click="selectCheckbox(choice)">
                   {{n+1}}
                 </v-btn>
               </v-list-tile-avatar>
@@ -17,7 +17,7 @@ Mahdi
                 <!--<v-list-tile-title :class=" (choicesArray.dir=='rtl') ? 'text-xs-right': 'text-xs-left' >-->
                 <v-list-tile-title class="add-question-option" >
                   <!--<v-text-field :counter="100" :label="'گزینه '+(n+1)" required></v-text-field>-->
-                  <v-checkbox v-model="selectedOptions" :value="'ch_'+(n+1)" hide-details class="shrink mr-2"></v-checkbox>
+                  <v-checkbox v-modal="choice.value" hide-details class="shrink mr-2"></v-checkbox>
                 </v-list-tile-title>
               </v-list-tile-content>
         </v-list-tile>
@@ -28,7 +28,6 @@ Mahdi
 export default {
   data(){
     return{
-      opt:[]
       //choicesArray:[],
       //editingProp:false,
     }
@@ -36,7 +35,6 @@ export default {
 props:{
     choicesArray:Array,
     editingProp:Boolean,
-    selectedOptions:Array,
 },
 updated(){
 }

@@ -1,7 +1,7 @@
 <template>
     <v-app light>       
         <drawerBlock :drawer="drawer" :clipped="clipped"/>
-
+        
         <toolbarBlock :drawer="drawer" :clipped="clipped" @drawerChenge="drawerChenge"/>
 
         <v-content>

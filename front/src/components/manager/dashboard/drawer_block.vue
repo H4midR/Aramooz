@@ -48,7 +48,7 @@ export default {
                 {
                 title: 'آزمون ها',
                 icon:"event_note",
-                url: 'tests',
+                url: 'examsList',
                 drawerList: [],
                 },
                 {

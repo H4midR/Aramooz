@@ -1,3 +1,8 @@
+/****** SHAKOURI *****
+Exam Controller defined in exam_controller
+---------------------------------------
+***********************/
+
 package controllers
 
 import (
@@ -9,11 +14,22 @@ import (
 	"encoding/json"
 )
 
-type ExamController struct {
-}
+//ExamController : http://URL:9090/exam
+type ExamController struct{}
 
-func (c *ExamController) Get(ctx iris.Context)     {}
+//
+// ──────────────────────────────────────────────── I ──────────
+//   :::::: E X A M : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────
+//
 func (c *ExamController) Options(ctx iris.Context) {}
+
+func (c *ExamController) Get(ctx iris.Context) {}
+
+func (c *ExamController) Put(ctx iris.Context)    {}
+
+func (c *ExamController) Delete(ctx iris.Context) {}
+
 func (c *ExamController) Post(ctx iris.Context) response.Response {
 	var req dataModels.Exam
 	var res response.Response
@@ -38,5 +54,14 @@ func (c *ExamController) Post(ctx iris.Context) response.Response {
 	res.Data = Uids
 	return res
 }
-func (c *ExamController) Put(ctx iris.Context)    {}
-func (c *ExamController) Delete(ctx iris.Context) {}
+//
+// ──────────────────────────────────────────────────────── II ──────────
+//   :::::: Q U E S T I O N : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────
+//
+
+//
+// ──────────────────────────────────────────────────── III ──────────
+//   :::::: C H O I C E : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────
+//

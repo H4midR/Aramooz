@@ -7,17 +7,21 @@
                         <v-icon color="white">help</v-icon>
                         &nbsp;<span class="white--text " >افزودن سوال</span>
                     </v-toolbar>
-                    <v-card-title primary-title>
+                    
+                    <v-card-title primary-title :class="(emptyQuestion.dir == 'rtl')? 'rtl text-xs-right' : 'ltr text-xs-left'">
                         <v-layout>
-                            <v-flex xs12 sm2 md2 lg2>
+                            <v-flex xs12 sm2>
                                 <v-text-field style="margin-left:10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                             </v-flex>
-                            <v-flex xs12 sm10 md10 lg10>
+                            <v-flex xs12 sm9>
 <v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm1>
+                                <v-switch v-model="editingQuestion.dir" value="ltr">LTR</v-switch>
                             </v-flex>
                         </v-layout>
                     </v-card-title>
-                    <v-card-text>
+                    <v-card-text :class="(emptyQuestion.dir == 'rtl')? 'rtl text-xs-right' : 'ltr text-xs-left'">
 <choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
                     </v-card-text>
                 </v-card>
@@ -39,6 +43,7 @@ return{
     emptyQuestion:{
         title:null,
         qnum:null,
+        dir:'rtl',
         choices:[{
             num:1,
             title:'1',
@@ -89,7 +94,17 @@ this.numberOfChoices=lengthOfChoices;
 },
 components:{
     choices
+},
+computed:{
+    questionDir:function(value){
+        if(value==true){
+            this.editingQuestion.dir='ltr';
+        }else{
+            this.editingQuestion.dir='ltr;'
+        }
+    }
 }
+
 }
 </script>
 

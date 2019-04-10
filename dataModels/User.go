@@ -9,7 +9,7 @@ type User struct {
 	Mobile   string `json:"mobile,omitempty" form:"Mobile"`
 	Token    string `json:"token,omitempty" form:"Token"`
 	Password string `json:"password,omitempty" form:"Password"`
-	Acl      string `json:"acl,omitempty" form:"Acl"`
+	ACL      string `json:"acl,omitempty" form:"Acl"`
 	Kind     string `json:"kind,omitempty"`
 }
 

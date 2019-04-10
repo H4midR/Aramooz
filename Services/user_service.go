@@ -3,10 +3,9 @@
 package services
 
 import (
-	
-	"Aramooz/helperfunc"
 	db "Aramooz/dataBaseServices"
 	"Aramooz/dataModels"
+	"Aramooz/helperfunc"
 	"Aramooz/services/response"
 	"encoding/json"
 	"fmt"
@@ -33,7 +32,7 @@ func NewUserService(uid string, token string) *userService {
 }
 
 func GetAcl(uid string) map[string]AclVal {
-	myg := NewMygraphService()
+	myg := db.NewDgraphTrasn()
 	q := fmt.Sprintf(`
 		{
 			user(func: uid(%s)) @filter(eq(key,"user")) {
@@ -42,9 +41,9 @@ func GetAcl(uid string) map[string]AclVal {
 		}
 		`, uid)
 
-	resb := myg.Query(q)
+	resb, _ := myg.Query(q)
 	var resstrc struct {
-		User []datamodels.User `json:"user"`
+		User []dataModels.User `json:"user"`
 	}
 	json.Unmarshal(resb, &resstrc)
 	useraclval, _ := helperfunc.UID(resstrc.User[0].ACL)
@@ -54,17 +53,17 @@ func GetAcl(uid string) map[string]AclVal {
 }
 
 //BasicOuth : outhenticate the user with uid and token
-func BasicOuth(uid string, token string) (Response, bool, string) {
+func BasicOuth(uid string, token string) (response.Response, bool, string) {
 	Uid, err := helperfunc.UIDStrX(uid)
 	if err != nil {
-		res := Response{
-			Error:  err.Error(),
-			Status: "Error",
-			Code:   InvalidUID,
+		res := response.Response{
+			Message: err.Error(),
+			State:   -1,
+			Code:    -1,
 		}
 		return res, false, ""
 	}
-	myg := NewMygraphService()
+	myg := db.NewDgraphTrasn()
 	q := fmt.Sprintf(`
 	 	{
 	 		user(func: uid(%s)) @filter(eq(kind,"User")) {
@@ -75,38 +74,38 @@ func BasicOuth(uid string, token string) (Response, bool, string) {
 	 		}
 	 	}
 		 `, Uid)
-	dbresstr := myg.Query(q)
+	dbresstr, _ := myg.Query(q)
 	var dbres struct {
-		User []datamodels.User
+		User []dataModels.User
 	}
 	//ctx.Write(dbresstr)
 	if err := json.Unmarshal(dbresstr, &dbres); err != nil {
-		res := Response{
-			Error:  err.Error(),
-			Status: "Error",
-			Code:   UserOuthFail,
+		res := response.Response{
+			Message: err.Error(),
+			State:   -1,
+			Code:    -1,
 		}
 		return res, false, ""
 	}
 	if len(dbres.User) < 1 {
-		res := Response{
-			Status: "Error",
-			Error:  "Invalid Username Or Password",
-			Code:   UserOuthFail,
+		res := response.Response{
+			State:   -1,
+			Message: "Invalid Username Or Password",
+			Code:    -1,
 		}
 		return res, false, ""
 	}
 	dbUser := dbres.User[0]
 	if dbUser.Token == token {
-		res := Response{
-			Status: "OK",
-			Code:   UserOuthSucc,
+		res := response.Response{
+			State: 1,
+			Code:  1,
 		}
 		return res, true, dbUser.ACL
 	} else {
-		res := Response{
-			Status: "Error",
-			Code:   UserOuthFail,
+		res := response.Response{
+			State: -1,
+			Code:  -1,
 		}
 		return res, false, ""
 	}

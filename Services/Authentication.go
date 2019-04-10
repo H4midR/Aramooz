@@ -2,17 +2,12 @@ package services
 
 import (
 	"Aramooz/helperfunc"
-	"Aramooz/services"
-	db "Aramooz/dataBaseServices"
-	"Aramooz/dataModels"
 	"Aramooz/services/response"
-	"encoding/json"
-	"fmt"
 
 	"github.com/kataras/iris"
 )
 
-func Authentication(ctx iris.Context, ACL AclVal, dismissAcl bool) response.Response{
+func Authentication(ctx iris.Context, ACL AclVal, dismissAcl bool) response.Response {
 	Uid := ctx.GetHeader("X-USER")
 	Token := ctx.GetHeader("Authorization-Token")
 
@@ -28,14 +23,15 @@ func Authentication(ctx iris.Context, ACL AclVal, dismissAcl bool) response.Resp
 	acl := Acl()
 	if !acl.Allow(helperfunc.UIDNR(uacl), ACL) {
 		res := response.Response{
-			Error: "Access Denied",
-			Code:  services.AccessDenied,
+			Message: "Access Denied",
+			Code:    -1,
 		}
 		return res
 	}
 	return res
 }
 
+/*
 func NewUserService(uid string, token string) *userService {
 	return &userService{
 		key:   "poster",
@@ -43,7 +39,8 @@ func NewUserService(uid string, token string) *userService {
 		Token: token,
 	}
 }
-
+*/
+/*
 func GetAcl(uid string) map[string]AclVal {
 	myg := db.NewDgraphTrasn()
 	q := fmt.Sprintf(`
@@ -54,9 +51,9 @@ func GetAcl(uid string) map[string]AclVal {
 		}
 		`, uid)
 
-	resb := myg.Query(q)
+	resb, _ := myg.Query(q)
 	var resstrc struct {
-		User []datamodels.User `json:"user"`
+		User []dataModels.User `json:"user"`
 	}
 	json.Unmarshal(resb, &resstrc)
 	useraclval, _ := helperfunc.UID(resstrc.User[0].ACL)
@@ -70,61 +67,61 @@ func BasicOuth(uid string, token string) (response.Response, bool, string) {
 	Uid, err := helperfunc.UIDStrX(uid)
 	if err != nil {
 		res := response.Response{
-			Error:  err.Error(),
-			Status: "Error",
-			Code:   InvalidUID,
+			Message: err.Error(),
+			State:   -1,
+			Code:    -1,
 		}
 		return res, false, ""
 	}
-	myg := NewMygraphService()
+	myg := db.NewDgraphTrasn()
 	q := fmt.Sprintf(`
 	 	{
 	 		user(func: uid(%s)) @filter(eq(kind,"User")) {
 				uid
 				token
-				
+
 				acl
 	 		}
 	 	}
 		 `, Uid)
-	dbresstr := myg.Query(q)
+	dbresstr, _ := myg.Query(q)
 	var dbres struct {
-		User []datamodels.User
+		User []dataModels.User
 	}
 	//ctx.Write(dbresstr)
 	if err := json.Unmarshal(dbresstr, &dbres); err != nil {
 		res := response.Response{
-			Error:  err.Error(),
-			Status: "Error",
-			Code:   UserOuthFail,
+			Message: err.Error(),
+			State:   -1,
+			Code:    -1,
 		}
 		return res, false, ""
 	}
 	if len(dbres.User) < 1 {
 		res := response.Response{
-			Status: "Error",
-			Error:  "Invalid Username Or Password",
-			Code:   UserOuthFail,
+			State:   -1,
+			Message: "Invalid Username Or Password",
+			Code:    -1,
 		}
 		return res, false, ""
 	}
 	dbUser := dbres.User[0]
-	if dbUser.Token == token  {
+	if dbUser.Token == token {
 		res := response.Response{
-			Status: "OK",
-			Code:   UserOuthSucc,
+			State: 1,
+			Code:  1,
 		}
 		return res, true, dbUser.ACL
 	} else {
 		res := response.Response{
-			Status: "Error",
-			Code:   UserOuthFail,
+			State: -1,
+			Code:  -1,
 		}
 		return res, false, ""
 	}
 
 }
-
+*/
 /*
 func Owner(ctx iris.Context, OwnerUID uint64, TargetUID uint64) (services.Response, bool) {
 	res := services.Response{}
@@ -180,3 +177,4 @@ func Owner(ctx iris.Context, OwnerUID uint64, TargetUID uint64) (services.Respon
 
 	return res, false
 }
+*/

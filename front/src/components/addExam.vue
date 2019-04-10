@@ -9,8 +9,9 @@
             <v-text-field label="هزینه شرکت در آزمون" v-model="cost"></v-text-field>
         </v-flex>
         <v-flex xs12 md4>
+            <div>وضعیت آزمون</div>
             <v-radio-group v-model="status" row>
-                <span>وضعیت آزمون</span>
+                
                 <v-radio label="فعال" value="active"></v-radio>
                 <v-radio label="غیرفعال" value="deactive"></v-radio>
             </v-radio-group>
@@ -18,8 +19,9 @@
     </v-layout>
     <v-layout row wrap>
         <v-flex xs12 md3>
+            <div>آزمون چند درسه است؟</div>
             <v-radio-group v-model="multiCourse" row>
-                <span>آزمون چند درسه است؟</span>
+                
                 <v-radio label="خیر" value="yes"></v-radio>
                 <v-radio label="بلی" value="no"></v-radio>
             </v-radio-group>
@@ -37,8 +39,8 @@
     
     <v-layout row wrap>
         <v-flex xs12 md4>
-           
-            <v-radio-group label="آزمون نمره منفی دارد؟" v-model="negative" row>
+           <div>آزمون نمره منفی دارد؟</div>
+            <v-radio-group label="" v-model="negative" row>
                 <v-radio name="negative" label="خیر" :value="0"></v-radio>
                 <v-radio name="negative" label="بلی" :value="1"></v-radio>                
             </v-radio-group>

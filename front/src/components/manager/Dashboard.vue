@@ -31,6 +31,14 @@ export default {
             this.drawer = !this.drawer
             this.clipped = !this.clipped
         }
+    },
+    prop:{
+        User:Object
+    },
+    mounted(){
+        if (this.User == null){
+            this.$router.replace("/");
+        }
     }
 
 }

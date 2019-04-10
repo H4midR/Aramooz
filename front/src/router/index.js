@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // add your components here
-import HelloWorld from '@/components/HelloWorld'
+import Main from '@/components/Main'
 import Login from '@/components/login'
 import signup from '@/components/signup'
 import addExam from '@/components/addExam'
 import addQuestion from '@/components/addQuestion'
+import startExam from '@/components/startExam'
 
 Vue.use(Router)
 
@@ -15,7 +16,7 @@ export default new Router({
     {
       path: '/',
       name: 'root',
-      component: HelloWorld
+      component: Main
     },
     {
       path : '/login',
@@ -28,11 +29,14 @@ export default new Router({
     {
       path : '/addExam',
       component: addExam
-    }
-    ,
+    },
     {
       path : '/addquestion',
       component: addQuestion
+    },
+    {
+      path : '/startExam',
+      component: startExam
     }
   ]
 })

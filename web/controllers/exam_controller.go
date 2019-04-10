@@ -1,42 +1,29 @@
+/****** SHAKOURI *****
+Exam Controller defined in exam_controller
+---------------------------------------
+***********************/
+
 package controllers
 
-import (
-	"github.com/kataras/iris"
+//ExamController : http://URL:9090/exam
+// type ExamController struct{}
 
-	db "Aramooz/dataBaseServices"
-	"Aramooz/dataModels"
-	"Aramooz/services/response"
-	"encoding/json"
-)
+//
+// ──────────────────────────────────────────────── I ──────────
+//   :::::: E X A M : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────
+//
 
-type ExamController struct {
-}
+//
+// ──────────────────────────────────────────────────────── II ──────────
+//   :::::: Q U E S T I O N : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────
+//
 
-func (c *ExamController) Get(ctx iris.Context)     {}
-func (c *ExamController) Options(ctx iris.Context) {}
-func (c *ExamController) Post(ctx iris.Context) response.Response {
-	var req dataModels.Exam
-	var res response.Response
-	err := ctx.ReadJSON(&req)
+// func (c *ExamController) Get(ctx iris.Context) {}
 
-	res.HandleErr(err)
-	if res.Code < 1 {
-		return res
-	}
-	req.Kind = dataModels.EType
-	mgt := db.NewDgraphTrasn()
-	q, err := json.Marshal(req)
-	res.HandleErr(err)
-	if res.Code < 1 {
-		return res
-	}
-	_, Uids, err := mgt.Mutate(q)
-	res.HandleErr(err)
-	if res.Code < 1 {
-		return res
-	}
-	res.Data = Uids
-	return res
-}
-func (c *ExamController) Put(ctx iris.Context)    {}
-func (c *ExamController) Delete(ctx iris.Context) {}
+//
+// ──────────────────────────────────────────────────── III ──────────
+//   :::::: C H O I C E : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────
+//

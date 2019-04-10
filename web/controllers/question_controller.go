@@ -1,12 +1,12 @@
 /****** SHAKOURI *****
-Exam Controller defined in exam_controller
+Question Controller defined in question_controller
 ---------------------------------------
 ***********************/
 
 package controllers
 
-//ExamController : http://URL:9090/exam
-// type ExamController struct{}
+//questionController : http://URL:9090/question
+// type questionController struct{}
 
 //
 // ──────────────────────────────────────────────── I ──────────
@@ -20,7 +20,7 @@ package controllers
 // ──────────────────────────────────────────────────────────────────
 //
 
-// func (c *ExamController) Get(ctx iris.Context) {}
+// func (c *questionController) Get(ctx iris.Context) {}
 
 //
 // ──────────────────────────────────────────────────── III ──────────

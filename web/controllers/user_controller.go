@@ -3,6 +3,8 @@ package controllers
 import (
 	db "Aramooz/dataBaseServices"
 	"Aramooz/helperfunc"
+	"Aramooz/services"
+
 	"errors"
 	"fmt"
 	"log"
@@ -102,7 +104,13 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 //Put : Put /user/ : edit a user
 //TODO: 0% -
 // ? headers:(X-USER,TOKEN)
-func (c *UserController) Put(ctx iris.Context) {
+func (c *UserController) Put(ctx iris.Context) response.Response {
+	acl := services.Acl()
+	res := services.Authentication(ctx, acl.ACLDef["Admin"], false)
+	if res.Code < 1 {
+		return res
+	}
+	return res
 	//UUID := ctx.GetHeader("X-USER")
 }
 

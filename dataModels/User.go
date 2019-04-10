@@ -1,5 +1,7 @@
 package dataModels
 
+import "golang.org/x/crypto/bcrypt"
+
 //User model
 type User struct {
 	Uid      string `json:"uid,omitempty" form:"Uid"`
@@ -12,3 +14,22 @@ type User struct {
 }
 
 const UserType = "User"
+
+// GeneratePassword : will generate a hashed password for us based on the
+// user's input.
+func GeneratePassword(userPassword string) ([]byte, error) {
+	return bcrypt.GenerateFromPassword([]byte(userPassword), bcrypt.DefaultCost)
+}
+
+//CompairPassword compair the given password and hassed password
+func CompairPassword(DbHPass string, Password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(DbHPass), []byte(Password))
+}
+
+// ValidatePassword : will check if passwords are matched.
+func ValidatePassword(userPassword string, hashed []byte) (bool, error) {
+	if err := bcrypt.CompareHashAndPassword(hashed, []byte(userPassword)); err != nil {
+		return false, err
+	}
+	return true, nil
+}

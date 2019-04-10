@@ -17,10 +17,10 @@
                         <v-card-title primary-title >
                             <v-layout>
                                 <v-flex xs12 sm2>
-                                    <v-text-field style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
+                                    <v-text-field v-model="editingQuestion.qnum" style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm10>
-    <v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
+    <v-text-field :counter="200" label="عنوان سوال" required v-model="editingQuestion.title">{{editingQuestion.title}}</v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-card-title>
@@ -28,6 +28,10 @@
     <choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
                         </v-card-text>
                         </div>
+                        <v-divider></v-divider>
+                        <v-btn class="success" @click="submitQuestion">
+                            <v-icon >check</v-icon>&nbsp;ثبت
+                        </v-btn>
                     </v-form>
                 </v-card>
             </v-flex>
@@ -39,6 +43,7 @@ import choices from '@/components/manager/addQuestion/choices'
 export default {
 data(){
 return{
+    axios:require('axios'),
     editing:false,
     emptyChoice:{
             num:0,
@@ -95,6 +100,13 @@ this.numberOfChoices=lengthOfChoices;
     }else{
         this.editingQuestion.choices[item_index].value=false;
     }
+    },
+    submitQuestion(){
+        this.axios.post("http://localhost:9090/addquestion",JSON.stringify({
+            question:this.editingQuestion
+        })).then(res=>{
+            console.log(res);
+        });
     }
 },
 components:{

@@ -7,17 +7,14 @@ import (
 	"Aramooz/dataModels"
 	"Aramooz/services/response"
 	"encoding/json"
-
-	
 )
 
-type ExamController struct{
-
+type ExamController struct {
 }
 
-func(c *ExamController) Get (ctx iris.context){}
-func(c *ExamController) Options (ctx iris.context){}
-func(c *ExamController) Post (ctx iris.context) response.Response {
+func (c *ExamController) Get(ctx iris.Context)     {}
+func (c *ExamController) Options(ctx iris.Context) {}
+func (c *ExamController) Post(ctx iris.Context) response.Response {
 	var req dataModels.Exam
 	var res response.Response
 	err := ctx.ReadJSON(&req)
@@ -41,5 +38,5 @@ func(c *ExamController) Post (ctx iris.context) response.Response {
 	res.Data = Uids
 	return res
 }
-func(c *ExamController) Put (ctx iris.context){}
-func(c *ExamController) Delete (ctx iris.context){}
+func (c *ExamController) Put(ctx iris.Context)    {}
+func (c *ExamController) Delete(ctx iris.Context) {}

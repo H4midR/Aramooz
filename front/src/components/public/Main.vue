@@ -74,7 +74,6 @@ export default {
     data(){
         return{
             title: "آزمون یار", //Page or Site Title
-            show: false,
             menus:[
                 {
                     title:"آشنایی با ما",

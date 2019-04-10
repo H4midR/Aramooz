@@ -9,6 +9,7 @@ import addExam from '@/components/manager/addExam'
 import addQuestion from '@/components/manager/addQuestion'
 import startExam from '@/components/client/startExam'
 import examsList from '@/components/manager/examsList'
+import Dashboard from '@/components/manager/Dashboard'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +42,10 @@ export default new Router({
     {
       path : '/examsList',
       component: examsList
+    },
+    {
+      path : '/Dashboard',
+      component: Dashboard
     }
   ]
 })

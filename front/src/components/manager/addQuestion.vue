@@ -103,7 +103,7 @@ this.numberOfChoices=lengthOfChoices;
     },
     submitQuestion(){
         this.axios.post("http://localhost:9090/addquestion",JSON.stringify({
-            question:this.editingQuestion
+            question:this.editingQuestion.title
         })).then(res=>{
             console.log(res);
         });

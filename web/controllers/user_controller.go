@@ -2,8 +2,10 @@ package controllers
 
 import (
 	db "Aramooz/dataBaseServices"
+	"Aramooz/helperfunc"
 	"errors"
 	"fmt"
+	"log"
 
 	"Aramooz/dataModels"
 	"Aramooz/services/response"
@@ -108,4 +110,104 @@ func (c *UserController) Put(ctx iris.Context) {
 //TODO: 0% -
 // ?headers:(X-USER,TOKEN)
 func (c *UserController) Delete(ctx iris.Context) {
+}
+
+//
+
+//PostLogin : sign in
+func (c *UserController) PostLogin(ctx iris.Context) response.Response { // must cheack uniq mobile
+	//UID, _ := strconv.ParseUint(uid, 16, 64)
+	var req dataModels.User // make(map[string]string)
+	ctx.ReadJSON(&req)
+	var res response.Response
+	myg := db.NewDgraphTrasn()
+	q := fmt.Sprintf(`
+	 	{
+	 		user(func: eq(mobile,"%s")) @filter(eq(kind,"User")) {
+				uid
+				password
+				token
+	 		}
+	 	}
+		 `, req.Mobile)
+
+	dbresstr, err := myg.Query(q)
+	if res.HandleErr(err) {
+		return res
+	}
+	var dbres struct {
+		User []dataModels.User
+	}
+	//ctx.Write(dbresstr)
+	if err := json.Unmarshal(dbresstr, &dbres); err != nil {
+		log.Print(err)
+	}
+
+	if len(dbres.User) < 1 {
+		res = response.Response{
+			State:   -1,
+			Message: "Invalid Username Or Password",
+			Code:    -1,
+		}
+		return res
+	}
+
+	dbUser := dbres.User[0]
+
+	// ? uncomment if using hash password
+	//if  datamodels.CompairPassword(dbUser.Password, req.Password) == nil {
+	if dbUser.Password == req.Password {
+
+		dbres.User[0].Token = helperfunc.Tokengenerator()
+		dbqry, _ := json.Marshal(dbres)
+		myg.Mutate(dbqry)
+		/*var UData struct {
+			Uid   string
+			Token string
+			User  datamodels.User
+		}
+		UData.Token = dbres.User[0].Token
+		UData.Uid = dbres.User[0].Uid
+		UData.User= dbres.User[]*/
+
+		fulluser, _ := c.getUserData(dbres.User[0].Uid)
+		var dbfuser struct {
+			User []dataModels.User
+		}
+		if err := json.Unmarshal(fulluser, &dbfuser); err != nil {
+			log.Print(err)
+		}
+
+		res = response.Response{
+			Data:    dbfuser.User[0],
+			Message: "ورود موفقیت آمیز",
+			State:   1,
+			Code:    1,
+		}
+		return res
+
+	}
+	res = response.Response{
+		State:   -1,
+		Message: "Invalid Username Or Password",
+		Code:    -1,
+	}
+	return res
+}
+
+//GetBy : get all data of user		- 	uid user id
+func (c *UserController) getUserData(Uid string) ([]byte, error) {
+	//res,c := services.BasicOuth()
+	myg := db.NewDgraphTrasn()
+	q := fmt.Sprintf(`
+		{
+			user(func: uid(%s)) @filter(eq(kind,"User")) {
+				uid
+				expand(_all_)
+				
+			}
+		}
+		`, Uid)
+
+	return myg.Query(q)
 }

@@ -58,7 +58,7 @@ export default {
   methods: {
     login(){
       this.axios.post("http://localhost:9090/user/login",JSON.stringify({
-        phone:this.phone,
+        mobile:this.phone,
         password:this.password
       }))
     }

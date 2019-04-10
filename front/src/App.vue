@@ -1,8 +1,9 @@
 <template>
   <v-app>
+
     <v-content fill-height fluid>
 
-      <router-view :User="User" />
+      <router-view @Login="userloggedin" :User="User" />
 
     </v-content>
 
@@ -26,6 +27,9 @@
 
     },
     methods: {
+      userloggedin(e){
+        this.User=e
+      }
 
     },
     created: function () {

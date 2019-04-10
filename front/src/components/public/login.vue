@@ -62,7 +62,8 @@ export default {
         password:this.password
       })).then(res=>{
         if(res.data.Code >0 ){
-          this.$emit("Login",res.data.Data)
+          this.$emit("Login",res.data.Data);
+          this.router.replace("#/")
         }
       })
     }

@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import examBasicInfo from '@/components/exam/examBasicInfo'
-import questionContent from '@/components/exam/questionContent'
-import questionsNumber from '@/components/exam/questionsNumber'
+import examBasicInfo from '@/components/client/exam/examBasicInfo'
+import questionContent from '@/components/client/exam/questionContent'
+import questionsNumber from '@/components/client/exam/questionsNumber'
 export default {
 data(){return{
     currentQuestion:Object,

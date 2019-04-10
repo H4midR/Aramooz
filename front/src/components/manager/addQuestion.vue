@@ -32,7 +32,7 @@
     </v-container>
 </template>
 <script>
-import choices from '@/components/addQuestion/choices'
+import choices from '@/components/manager/addQuestion/choices'
 export default {
 data(){
 return{

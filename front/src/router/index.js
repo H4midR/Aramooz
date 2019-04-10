@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // add your components here
-import Main from '@/components/Main'
-import Login from '@/components/login'
-import signup from '@/components/signup'
-import addExam from '@/components/addExam'
-import addQuestion from '@/components/addQuestion'
-import startExam from '@/components/startExam'
-import examsList from '@/components/examsList'
+import Main from '@/components/public/Main'
+import Login from '@/components/public/login'
+import signup from '@/components/public/signup'
+import addExam from '@/components/manager/addExam'
+import addQuestion from '@/components/manager/addQuestion'
+import startExam from '@/components/client/startExam'
+import examsList from '@/components/manager/examsList'
 Vue.use(Router)
 
 export default new Router({

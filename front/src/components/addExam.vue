@@ -6,7 +6,7 @@
             <v-text-field label="عنوان آزمون" v-model="title" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md4>
-            <v-text-field label="هزینه شرکت در آزمون" v-model="cost"></v-text-field>
+            <v-text-field label="هزینه شرکت در آزمون" v-model="cost" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md4>
             <div>وضعیت آزمون</div>
@@ -27,13 +27,13 @@
             </v-radio-group>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="انتخاب درس" v-model="selectCourse"></v-text-field>
+            <v-text-field label="انتخاب درس" v-model="selectCourse" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="تعداد سوالات نهایی" v-model="numberofFinalQuestion"></v-text-field>
+            <v-text-field label="تعداد سوالات نهایی" v-model="numberofFinalQuestion" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="مدت آزمون" v-model="duration"></v-text-field>
+            <v-text-field label="مدت آزمون" v-model="duration" style="padding:10px"></v-text-field>
         </v-flex>
     </v-layout>
     
@@ -47,15 +47,17 @@
         </v-flex>
 
         <v-flex xs12 md4>
+            <div>آیا سوالات به صورت رندم (تصادفی( نمایش داده شود؟</div>
             <v-radio-group v-model="randomShow" row>
-                <span>آیا سوالات به صورت رندم (تصادفی( نمایش داده شود؟</span>
+                
                 <v-radio label="خیر" value="yes"></v-radio>
                 <v-radio label="بلی" value="no"></v-radio>
             </v-radio-group>
         </v-flex>
         <v-flex xs12 md4>
+            <div>آیا آزمون در مقطع خاصی فعال شود؟</div>
             <v-radio-group v-model="specTime" row>
-                <span>آیا آزمون در مقطع خاصی فعال شود؟</span>
+                
                 <v-radio label="خیر" value="yes"></v-radio>
                 <v-radio label="بلی" value="no"></v-radio>
             </v-radio-group>
@@ -75,13 +77,13 @@
         </v-menu>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="تاریخ پایان آزمون" v-model="endDate"></v-text-field>
+            <v-text-field label="تاریخ پایان آزمون" v-model="endDate" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="ساعت شروع آزمون" v-model="startTime"></v-text-field>
+            <v-text-field label="ساعت شروع آزمون" v-model="startTime" style="padding:10px"></v-text-field>
         </v-flex>
         <v-flex xs12 md3>
-            <v-text-field label="ساعت پایان آزمون" v-model="endTime"></v-text-field>
+            <v-text-field label="ساعت پایان آزمون" v-model="endTime" style="padding:10px"></v-text-field>
         </v-flex>
     </v-layout>
     <v-layout row wrap>

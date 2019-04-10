@@ -3,29 +3,32 @@
         <v-layout class="add-question-form" justify-center>
             <v-flex xs12 sm11 md10 lg8>
                 <v-card>
-                    <v-toolbar class="pink" >
-                        <v-icon color="white">help</v-icon>
-                        &nbsp;<span class="white--text " >افزودن سوال</span>
-                        <v-spacer>
-                        </v-spacer>
-                            <v-switch label="چپ چین" color="orange" v-model="editingQuestion.ltr"></v-switch>
-                    </v-toolbar>
-                    {{editingQuestion.ltr}}
-                    <div :class="(editingQuestion.ltr) ? 'ltr text-xs-left' : 'rtl text-xs-right'">
-                    <v-card-title primary-title >
-                        <v-layout>
-                            <v-flex xs12 sm2>
-                                <v-text-field style="margin-left:10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
+                    <v-form>
+                        <v-toolbar class="pink" >
+                            <v-icon color="white">help</v-icon>
+                            &nbsp;<span class="white--text" >افزودن سوال</span>
+                            <v-spacer>
+                            </v-spacer>
+                            <v-flex shrink class="dir-switch">
+                                <v-switch label="چپ چین" color="yellow" v-model="editingQuestion.ltr"></v-switch>
                             </v-flex>
-                            <v-flex xs12 sm10>
-<v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
-                            </v-flex>
-                        </v-layout>
-                    </v-card-title>
-                    <v-card-text >
-<choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
-                    </v-card-text>
-                    </div>
+                        </v-toolbar>
+                        <div :class="(editingQuestion.ltr) ? 'ltr text-xs-left' : 'rtl text-xs-right'">
+                        <v-card-title primary-title >
+                            <v-layout>
+                                <v-flex xs12 sm2>
+                                    <v-text-field style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm10>
+    <v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
+                                </v-flex>
+                            </v-layout>
+                        </v-card-title>
+                        <v-card-text >
+    <choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
+                        </v-card-text>
+                        </div>
+                    </v-form>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -105,11 +108,17 @@ computed:{
 </script>
 
 <style>
-.ltr *{
+.add-question-form .dir-switch{
+    margin-top:17px;
+}
+.add-question-form .dir-switch *{
+    color:#fff;
+}
+.add-question-form .ltr *{
     direction:ltr;
     text-align:left;
 }
-.rtl *{
+.add-question-form .rtl *{
     direction:rtl;
     text-align:right;
 }

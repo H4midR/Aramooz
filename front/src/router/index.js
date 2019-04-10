@@ -8,7 +8,7 @@ import signup from '@/components/signup'
 import addExam from '@/components/addExam'
 import addQuestion from '@/components/addQuestion'
 import startExam from '@/components/startExam'
-
+import examsList from '@/components/examsList'
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +37,10 @@ export default new Router({
     {
       path : '/startExam',
       component: startExam
+    },
+    {
+      path : '/examsList',
+      component: examsList
     }
   ]
 })

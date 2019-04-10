@@ -1,48 +1,37 @@
 <template>
     <v-app light>       
-        <v-navigation-drawer :clipped="clipped" v-model="drawer" enable-resize-watcher app >
-            <v-list>
-            </v-list>
-        </v-navigation-drawer>      
-        <v-toolbar fixed app :clipped-left="clipped">
-            <v-toolbar-side-icon @click.stop="drawer = !drawer" />
-            <v-toolbar-title v-text="title"/>
-            <v-spacer/>
-            <v-btn icon>
-                <v-icon>more_vert</v-icon>
-            </v-btn>
-        </v-toolbar>      
+        <drawerBlock :drawer="drawer" :clipped="clipped"/>
+
+        <toolbarBlock :drawer="drawer" :clipped="clipped" @drawerChenge="drawerChenge"/>
+
         <v-content>
             <v-container fluid>
+
             </v-container>
         </v-content>
   </v-app>
 </template>
 
 <script>
+import drawerBlock from '@/components/manager/dashboard/drawer_block'
+import toolbarBlock from '@/components/manager/dashboard/toolbar_block'
 export default {
     data () {
         return {
             title: "پنل مدیریت آزمون یار", //Page or Site Title
             drawer: true,
             clipped: false,
-            items: [
-                {
-                action: 'local_activity',
-                title: 'Attractions',
-                path: '/',
-                items: [],
-                },
-                {
-                action: 'restaurant',
-                title: 'Breakfast',
-                path: '/breakfast',
-                items: []
-                },       
-            ] //items
         }
-
-}
+    },
+    components:{
+        drawerBlock,toolbarBlock
+    },
+    methods:{
+        drawerChenge(){
+            this.drawer = !this.drawer
+            this.clipped = !this.clipped
+        }
+    }
 
 }
 </script>

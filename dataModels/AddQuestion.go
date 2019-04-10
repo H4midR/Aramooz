@@ -1,5 +1,5 @@
 package dataModels
 
 type AddQuestion struct {
-	Question string `json:"question"`
+	Question interface{} `json:"question"`
 }

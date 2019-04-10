@@ -16,4 +16,5 @@ func (c *AddQuestion) Post(ctx iris.Context) response.Response {
 	err := ctx.ReadJSON(&quest)
 	res.HandleErr(err)
 	return res
+
 }

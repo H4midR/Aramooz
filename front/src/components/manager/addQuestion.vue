@@ -20,7 +20,7 @@
                                     <v-text-field v-model="editingQuestion.qnum" style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm10>
-    <v-text-field :counter="200" label="عنوان سوال" required v-model="editingQuestion.title">{{editingQuestion.title}}</v-text-field>
+    <v-text-field :counter="200" label="عنوان سوال" required v-model="editingQuestion.title"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-card-title>
@@ -102,8 +102,9 @@ this.numberOfChoices=lengthOfChoices;
     }
     },
     submitQuestion(){
+        console.log(this.editingQuestion);
         this.axios.post("http://localhost:9090/addquestion",JSON.stringify({
-            question:this.editingQuestion.title
+            question:this.editingQuestion
         })).then(res=>{
             console.log(res);
         });

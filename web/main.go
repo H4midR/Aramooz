@@ -39,6 +39,7 @@ func main() {
 	//mvc.New(app.Party("/user", crs)).Handle(new(controllers.UserController))
 	mvc.New(app.Party("/user", crs)).Handle(new(controllers.UserController))
 	mvc.New(app.Party("/exam", crs)).Handle(new(controllers.ExamController))
+	mvc.New(app.Party("/addquestion", crs)).Handle(new(controllers.AddQuestion))
 
 	//dg := newClient()
 	//txn := dg.NewTxn()

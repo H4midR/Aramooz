@@ -28,6 +28,10 @@
     <choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
                         </v-card-text>
                         </div>
+                        <v-divider></v-divider>
+                        <v-btn class="success" >
+                            <v-icon >check</v-icon>&nbsp;ثبت
+                        </v-btn>
                     </v-form>
                 </v-card>
             </v-flex>
@@ -39,6 +43,7 @@ import choices from '@/components/manager/addQuestion/choices'
 export default {
 data(){
 return{
+    axios:requre('axios'),
     editing:false,
     emptyChoice:{
             num:0,
@@ -95,6 +100,13 @@ this.numberOfChoices=lengthOfChoices;
     }else{
         this.editingQuestion.choices[item_index].value=false;
     }
+    },
+    submitQuestion(){
+        this.axios.post("http://localhost:9090/addquestion",JSON.stringify({
+            question:this.editingQuestion
+        })).then(res=>{
+            console.log(res);
+        });
     }
 },
 components:{

@@ -60,7 +60,11 @@ export default {
       this.axios.post("http://localhost:9090/user/login",JSON.stringify({
         mobile:this.phone,
         password:this.password
-      }))
+      })).then(res=>{
+        if(res.data.Code >0 ){
+          this.$emit("Login",res.data.Data)
+        }
+      })
     }
   },
 }

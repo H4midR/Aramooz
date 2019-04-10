@@ -17,10 +17,10 @@
                         <v-card-title primary-title >
                             <v-layout>
                                 <v-flex xs12 sm2>
-                                    <v-text-field style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
+                                    <v-text-field v-model="editingQuestion.qnum" style="margin:4px 10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm10>
-    <v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
+    <v-text-field :counter="200" label="عنوان سوال" required v-model="editingQuestion.title">{{editingQuestion.title}}</v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-card-title>
@@ -29,7 +29,7 @@
                         </v-card-text>
                         </div>
                         <v-divider></v-divider>
-                        <v-btn class="success" >
+                        <v-btn class="success" @click="submitQuestion">
                             <v-icon >check</v-icon>&nbsp;ثبت
                         </v-btn>
                     </v-form>
@@ -43,7 +43,7 @@ import choices from '@/components/manager/addQuestion/choices'
 export default {
 data(){
 return{
-    axios:requre('axios'),
+    axios:require('axios'),
     editing:false,
     emptyChoice:{
             num:0,

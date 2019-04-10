@@ -1,8 +1,9 @@
 <template>
   <v-app>
+
     <v-content fill-height fluid>
 
-      <router-view :User="User" />
+      <router-view @Login="userloggedin" :User="User" :BaseURL="baseUrl" :ACL="ACL" />
 
     </v-content>
 
@@ -18,6 +19,9 @@
     data() {
       return {
         User:null,
+        baseUrl:"http://localhost:9090",
+        ACL:{},
+
       }
     },
 
@@ -26,6 +30,10 @@
 
     },
     methods: {
+      userloggedin(e){
+        this.User=e;
+        // TODO : get ACL list from server , depends on user.acl
+      }
 
     },
     created: function () {

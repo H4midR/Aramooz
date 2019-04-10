@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <v-app light>       
+        <drawerBlock :drawer="drawer" :clipped="clipped"/>
+        
+        <toolbarBlock :drawer="drawer" :clipped="clipped" @drawerChenge="drawerChenge"/>
+
+        <v-content>
+            <v-container fluid>
+    
     <v-toolbar flat color="white">
       <v-toolbar-title>My CRUD</v-toolbar-title>
       <v-divider
@@ -78,12 +85,19 @@
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
-  </div>
+  </v-container>
+        </v-content>
+  </v-app>
 </template>
 
 <script>
+import drawerBlock from '@/components/manager/dashboard/drawer_block'
+import toolbarBlock from '@/components/manager/dashboard/toolbar_block'
   export default {
     data: () => ({
+      title: "پنل مدیریت آزمون یار", //Page or Site Title
+            drawer: true,
+            clipped: false,
       dialog: false,
       headers: [
         {
@@ -133,6 +147,10 @@
     },
 
     methods: {
+      drawerChenge(){
+            this.drawer = !this.drawer
+            this.clipped = !this.clipped
+        },
       initialize () {
         this.desserts = [
           {
@@ -235,6 +253,9 @@
         }
         this.close()
       }
-    }
+    },
+    components:{
+        drawerBlock,toolbarBlock
+    },
   }
 </script>

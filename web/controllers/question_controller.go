@@ -7,14 +7,14 @@ import (
 	"github.com/kataras/iris"
 )
 
-type AddQuestion struct {
+type QuestionController struct {
 }
 
-func (c *AddQuestion) Post(ctx iris.Context) response.Response {
-	var quest dataModels.AddQuestion
+func (c *QuestionController) Post(ctx iris.Context) response.Response {
+	var req dataModels.Question
 	var res response.Response
-	err := ctx.ReadJSON(&quest)
+	res.Data = req
+	err := ctx.ReadJSON(&req)
 	res.HandleErr(err)
 	return res
-
 }

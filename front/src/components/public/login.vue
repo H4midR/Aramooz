@@ -58,9 +58,14 @@ export default {
   methods: {
     login(){
       this.axios.post("http://localhost:9090/user/login",JSON.stringify({
-        phone:this.phone,
+        mobile:this.phone,
         password:this.password
-      }))
+      })).then(res=>{
+        if(res.data.Code >0 ){
+          this.$emit("Login",res.data.Data);
+          this.$router.replace("/");
+        }
+      })
     }
   },
 }

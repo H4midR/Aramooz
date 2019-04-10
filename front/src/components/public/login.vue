@@ -63,7 +63,7 @@ export default {
       })).then(res=>{
         if(res.data.Code >0 ){
           this.$emit("Login",res.data.Data);
-          this.router.replace("#/")
+          this.$router.replace("/");
         }
       })
     }

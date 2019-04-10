@@ -15,7 +15,7 @@
                 <v-list-tile-title class="add-question-option" >
                   <v-layout>
                     <v-flex xs11>
-<v-text-field :counter="100" :label="'گزینه '+(n+1)" required></v-text-field>
+<v-text-field :counter="100" :label="'گزینه '+(n+1)" required v-model="choice.title"></v-text-field>
                     </v-flex>
                     <v-flex xs1 justify-center>
                     <v-tooltip bottom v-if="(choicesCount)>1">

@@ -1,29 +1,20 @@
-/****** SHAKOURI *****
-Question Controller defined in question_controller
----------------------------------------
-***********************/
-
 package controllers
 
-//questionController : http://URL:9090/question
-// type questionController struct{}
+import (
+	"Aramooz/dataModels"
+	"Aramooz/services/response"
 
-//
-// ──────────────────────────────────────────────── I ──────────
-//   :::::: E X A M : :  :   :    :     :        :          :
-// ──────────────────────────────────────────────────────────
-//
+	"github.com/kataras/iris"
+)
 
-//
-// ──────────────────────────────────────────────────────── II ──────────
-//   :::::: Q U E S T I O N : :  :   :    :     :        :          :
-// ──────────────────────────────────────────────────────────────────
-//
+type AddQuestion struct {
+}
 
-// func (c *questionController) Get(ctx iris.Context) {}
+func (c *AddQuestion) Post(ctx iris.Context) response.Response {
+	var quest dataModels.AddQuestion
+	var res response.Response
+	err := ctx.ReadJSON(&quest)
+	res.HandleErr(err)
+	return res
 
-//
-// ──────────────────────────────────────────────────── III ──────────
-//   :::::: C H O I C E : :  :   :    :     :        :          :
-// ──────────────────────────────────────────────────────────────
-//
+}

@@ -1,7 +1,12 @@
+/****** SHAKOURI *****
+Exam Controller defined in exam_controller
+---------------------------------------
+***********************/
+
 package controllers
 
 //ExamController : http://URL:9090/exam
-type ExamController struct{}
+// type ExamController struct{}
 
 //
 // ──────────────────────────────────────────────── I ──────────
@@ -15,9 +20,7 @@ type ExamController struct{}
 // ──────────────────────────────────────────────────────────────────
 //
 
-func (c *ExamController) Get (ctx iris.context){
-	
-}
+// func (c *ExamController) Get(ctx iris.Context) {}
 
 //
 // ──────────────────────────────────────────────────── III ──────────

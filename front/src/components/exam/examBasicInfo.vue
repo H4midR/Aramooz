@@ -28,7 +28,7 @@
 </v-layout>
 </template>
 <script>
-import timer from '@/components/timeCountdown'
+import timer from '@/components/exam/timeCountdown'
 export default {data(){return{}},
     props:{
         examInfoProp:Object

@@ -6,24 +6,26 @@
                     <v-toolbar class="pink" >
                         <v-icon color="white">help</v-icon>
                         &nbsp;<span class="white--text " >افزودن سوال</span>
+                        <v-spacer>
+                        </v-spacer>
+                            <v-switch label="چپ چین" color="orange" v-model="editingQuestion.ltr"></v-switch>
                     </v-toolbar>
-                    
-                    <v-card-title primary-title :class="(emptyQuestion.dir == 'rtl')? 'rtl text-xs-right' : 'ltr text-xs-left'">
+                    {{editingQuestion.ltr}}
+                    <div :class="(editingQuestion.ltr) ? 'ltr text-xs-left' : 'rtl text-xs-right'">
+                    <v-card-title primary-title >
                         <v-layout>
                             <v-flex xs12 sm2>
                                 <v-text-field style="margin-left:10px;" label="شماره سوال" required >{{editingQuestion.qnum}}</v-text-field>
                             </v-flex>
-                            <v-flex xs12 sm9>
+                            <v-flex xs12 sm10>
 <v-text-field :counter="200" label="عنوان سوال" required>{{editingQuestion.title}}</v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm1>
-                                <v-switch v-model="editingQuestion.dir" value="ltr">LTR</v-switch>
                             </v-flex>
                         </v-layout>
                     </v-card-title>
-                    <v-card-text :class="(emptyQuestion.dir == 'rtl')? 'rtl text-xs-right' : 'ltr text-xs-left'">
+                    <v-card-text >
 <choices :choicesCount="numberOfChoices" :choicesArray="editingQuestion.choices" @request2deleteItem="itemDeleted" @request2addOption="optionAdded" @request2selectItem="itemSelected"></choices>
                     </v-card-text>
+                    </div>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -43,7 +45,7 @@ return{
     emptyQuestion:{
         title:null,
         qnum:null,
-        dir:'rtl',
+        ltr:false,
         choices:[{
             num:1,
             title:'1',
@@ -96,19 +98,21 @@ components:{
     choices
 },
 computed:{
-    questionDir:function(value){
-        if(value==true){
-            this.editingQuestion.dir='ltr';
-        }else{
-            this.editingQuestion.dir='ltr;'
-        }
-    }
+    
 }
 
 }
 </script>
 
 <style>
+.ltr *{
+    direction:ltr;
+    text-align:left;
+}
+.rtl *{
+    direction:rtl;
+    text-align:right;
+}
 .add-question-form .v-list{
     background:none;
 }

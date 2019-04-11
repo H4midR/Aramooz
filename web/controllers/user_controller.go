@@ -57,6 +57,13 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	//
 
 	m := db.NewDgraphTrasn()
+	if req.Mobile == "" || req.Mobile == "0" {
+		res.Data = req
+		res.Message = "فیلد موبایل خالی است"
+		res.Code = -1
+		res.State = -1
+		return res
+	}
 	dbStrRes, err := m.Query(fmt.Sprintf(`
 		{
 			data(func:eq(mobile,"%s")){

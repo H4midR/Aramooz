@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import VueResource from 'vue-resource'
-import PDatePicker from 'vue2-persian-datepicker'
+//import PDatePicker from 'vue2-persian-datepicker'
 import HighchartsVue from 'highcharts-vue'
 import Highcharts from 'highcharts'
 import addMore from "highcharts/highcharts-more";

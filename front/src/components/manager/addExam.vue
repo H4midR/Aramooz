@@ -144,6 +144,12 @@ export default {
            
         }
     },
+    mounted(){
+
+    },
+    computed:{
+
+    },
     components:{
         //DatePicker: VuePersianDatetimePicker
     }

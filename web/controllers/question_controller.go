@@ -13,12 +13,12 @@ type QuestionController struct {
 }
 
 func (c *QuestionController) Get(ctx iris.Context) {
-	ctx.WriteString("Add Question")
+	ctx.WriteString("Add Question ..!")
 }
 func (c *QuestionController) Post(ctx iris.Context) response.Response {
 	var req dataModels.Question
 	var res response.Response
-	res.Data = req
+	//res.Data = req
 	//return
 	err := ctx.ReadJSON(&req)
 	res.HandleErr(err)

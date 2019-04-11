@@ -39,7 +39,7 @@ func (c *ExamController) Post(ctx iris.Context) response.Response {
 	if res.Code < 1 {
 		return res
 	}
-	req.Kind = dataModels.EType
+	req.Kind = dataModels.ExamType
 	mgt := db.NewDgraphTrasn()
 	q, err := json.Marshal(req)
 	res.HandleErr(err)

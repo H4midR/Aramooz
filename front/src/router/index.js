@@ -11,6 +11,7 @@ import startExam from '@/components/client/startExam'
 import examsList from '@/components/manager/examsList'
 import Dashboard from '@/components/manager/Dashboard'
 import profile from '@/components/public/profile'
+import report from '@/components/client/report'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,10 @@ export default new Router({
     {
       path : '/profile',
       component: profile
+    },
+    {
+      path: '/report',
+      component: report
     }
     
   ]

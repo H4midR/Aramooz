@@ -15,7 +15,8 @@ type QuestionController struct {
 func (c *QuestionController) Post(ctx iris.Context) response.Response {
 	var req dataModels.Question
 	var res response.Response
-	//res.Data = req
+	res.Data = req
+	//return
 	err := ctx.ReadJSON(&req)
 	res.HandleErr(err)
 	if res.Code < 1 {

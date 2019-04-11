@@ -52,7 +52,7 @@ return{
         },
     emptyQuestion:{
         //eid:exam.id,
-        eid:0,
+        
         title:null,
         qnum:null,
         ltr:false,
@@ -107,9 +107,8 @@ this.numberOfChoices=lengthOfChoices;
     },
     submitQuestion(){
         console.log(this.editingQuestion);
-        this.axios.post("http://localhost:9090/addquestion",JSON.stringify({
-            question:this.editingQuestion
-        })).then(res=>{
+        //this.editingQuestion.choices=this.editingQuestion.choices.map(x=>Number.parseInt())
+        this.axios.post(`http://localhost:9090/addquestion/${0}`,JSON.stringify(this.editingQuestion)).then(res=>{
             console.log(res);
         });
     }

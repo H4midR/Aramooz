@@ -56,7 +56,7 @@ return{
         ltr:false,
         choices:[{
             num:1,
-            title:'1',
+            title:'',
             value:false
         }]
     },

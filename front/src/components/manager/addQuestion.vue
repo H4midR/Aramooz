@@ -48,9 +48,11 @@ return{
     emptyChoice:{
             num:0,
             title:'',
-            value:false
+            value:'0'
         },
     emptyQuestion:{
+        //eid:exam.id,
+        eid:0,
         title:null,
         qnum:null,
         ltr:false,
@@ -67,10 +69,12 @@ return{
 /*
 editing: true | false ==> editing a question or add new one?
 item2edit => Which item is being edited?
+exam => Exam object
 
 props:{
 editing:Boolean,
 item2edit:Object,
+exam:Object
 },*/
 mounted(){
     if(this.editing){
@@ -95,10 +99,10 @@ this.numberOfChoices=lengthOfChoices;
     },
     itemSelected(item){
     var item_index=this.editingQuestion.choices.indexOf(item);
-    if((this.editingQuestion.choices[item_index].value)==false){
-        this.editingQuestion.choices[item_index].value=true;
+    if((this.editingQuestion.choices[item_index].value)=='0'){
+        this.editingQuestion.choices[item_index].value='1';
     }else{
-        this.editingQuestion.choices[item_index].value=false;
+        this.editingQuestion.choices[item_index].value='0';
     }
     },
     submitQuestion(){

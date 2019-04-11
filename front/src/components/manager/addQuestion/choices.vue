@@ -3,7 +3,7 @@
         <v-list-tile v-for="(choice,n) in choicesArray" :key="'ch_'+choice.num" class="add-question-choices">
               <v-list-tile-avatar>
                 <v-tooltip bottom>
-                <v-btn slot="activator" small depressed :class="(choice.value)? 'success':'grey lighten-2'" fab @click="selectingOption(choice)">
+                <v-btn slot="activator" small depressed :class="(choice.value == '1')? 'success':'grey lighten-2'" fab @click="selectingOption(choice)">
                   {{n+1}}
                 </v-btn>
                 <span v-if="choice.value">حذف پاسخ</span>

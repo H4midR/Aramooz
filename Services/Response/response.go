@@ -18,7 +18,7 @@ func (r *Response) HandleErr(err error) bool {
 	} else {
 		r.State = 1
 		r.Code = 1
-		r.Message = "OK"
+		r.Message = "ثبت نام شما با موفقیت انجام شد. خودکار به صفحه ورود خواهید رفت."
 		return false
 	}
 

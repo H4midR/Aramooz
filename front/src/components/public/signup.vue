@@ -39,9 +39,9 @@
                         </v-tooltip>
                     </v-card-actions>
                 
-                    <v-snackbar v-model="snackbar" color="success" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" >
+                    <v-snackbar v-model="snackbar" :color="snackbarColor" top="top" right="right" timeout="5000">
                     {{ response }}
-                    <v-btn right flat fab @click="snackbar = false">
+                    <v-btn right flat fab @click="snackbar = false" :loading="redirectBtnLoging">
                         <v-icon>close</v-icon>
                     </v-btn>
                     </v-snackbar>
@@ -59,11 +59,9 @@ export default {
         name:null,
         response:null,
         btnLoading: false,
+        redirectBtnLoging:false,
         snackbar: false,
-        y: 'top',
-        x: 'right',
-        mode: '',
-        timeout: 4000,
+        snackbarColor: null,
         showPass: false,
         rules: {
           required: value => !!value || 'اجباری!!',
@@ -87,6 +85,13 @@ export default {
                 name:this.name,
             })).then(res=>{
               this.response=res.data.Message
+              if(res.data.Code > 0){
+                  this.snackbarColor = "success";
+                  this.redirectBtnLoging = true;
+                  setTimeout(() => this.$router.replace("/login") , 3000);
+              }else{
+                  this.snackbarColor = "warning";
+              }
               this.snackbar = true
               this.btnLoading = false
             })

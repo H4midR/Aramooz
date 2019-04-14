@@ -52,6 +52,8 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 		return res
 	}
 	req.Kind = dataModels.UserType
+	s, _ := dataModels.GeneratePassword(req.Password)
+	req.Password = string(s)
 	//
 	// ──────────────────────────────── CHEACK NO OTHER USER WITH THE SAME MOBILE ─────
 	//
@@ -170,8 +172,8 @@ func (c *UserController) PostLogin(ctx iris.Context) response.Response { // must
 	dbUser := dbres.User[0]
 
 	// ? uncomment if using hash password
-	//if  datamodels.CompairPassword(dbUser.Password, req.Password) == nil {
-	if dbUser.Password == req.Password {
+	if dataModels.CompairPassword(dbUser.Password, req.Password) == nil {
+		// if dbUser.Password == req.Password {
 
 		dbres.User[0].Token = helperfunc.Tokengenerator()
 		dbqry, _ := json.Marshal(dbres)

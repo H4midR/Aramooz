@@ -4,6 +4,7 @@
       <v-flex xs12 md5 >
           <v-card xs12 md5 v-if="User != null && resMessage == null">
             <v-alert value="true" type="success" outline>
+              {{ User.name }} عزیز: 
                قبلا وارد سایت شده اید
               <v-progress-linear indeterminate color="success" class="mb-0" />
             </v-alert>

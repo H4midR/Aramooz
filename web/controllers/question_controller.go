@@ -15,17 +15,15 @@ type QuestionController struct {
 func (c *QuestionController) Get(ctx iris.Context) {
 	ctx.WriteString("Add Question ..!")
 }
-func (c *QuestionController) PostBy(eid string, ctx iris.Context) response.Response {
+func (c *QuestionController) PostBy(userId string, ctx iris.Context) response.Response {
 	var req dataModels.Question
 	var res response.Response
-
+	req.Kind = dataModels.QuestionType
 	err := ctx.ReadJSON(&req)
 	res.HandleErr(err)
 	if res.Code < 1 {
 		return res
 	}
-	res.Data = req
-	return res
 	dbwork := db.NewDgraphTrasn()
 	query, err := json.Marshal(req)
 	res.HandleErr(err)
@@ -37,6 +35,21 @@ func (c *QuestionController) PostBy(eid string, ctx iris.Context) response.Respo
 	if res.Code < 1 {
 		return res
 	}
-	res.Data = uids
+	qu := `{
+			set{
+				<` + userId + `> <uid> <` + uids["blank-0"] + `>
+			}
+		}`
+	query2, err2 := json.Marshal(qu)
+	res.HandleErr(err2)
+	if res.Code < 1 {
+		return res
+	}
+	_, uids2, err2 := dbwork.Mutate(query2)
+	res.HandleErr(err2)
+	if res.Code < 1 {
+		return res
+	}
+	res.Data = uids2
 	return res
 }

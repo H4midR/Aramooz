@@ -47,8 +47,7 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	var res response.Response
 	err := ctx.ReadJSON(&req)
 
-	res.HandleErr(err)
-	if res.Code < 1 {
+	if res.HandleErr(err) {
 		return res
 	}
 	req.Kind = dataModels.UserType
@@ -57,8 +56,7 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	//
 	// ──────────────────────────────── CHEACK NO OTHER USER WITH THE SAME MOBILE ─────
 	//
-	res.Data = req
-	return res
+
 	m := db.NewDgraphTrasn()
 	if req.Mobile == "" || req.Mobile == "0" {
 		res.Data = req
@@ -115,10 +113,39 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 //TODO: 0% -
 // ? headers:(X-USER,TOKEN)
 func (c *UserController) Put(ctx iris.Context) response.Response {
+
 	acl := services.Acl()
-	res := services.Authentication(ctx, acl.ACLDef["Admin"], false)
+	res := services.Authentication(ctx, acl.ACLDef["User"], true)
 	if res.Code < 1 {
 		return res
+	}
+
+	myg := db.NewDgraphTrasn()
+
+	var dbUser dataModels.User
+	ctx.ReadJSON(&dbUser)
+
+	dbUser.Uid = ctx.GetHeader("X-USER")
+
+	dbqry, _ := json.Marshal(dbUser)
+	_, _, err := myg.Mutate(dbqry)
+	if res.HandleErr(err) {
+		return res
+	}
+
+	fulluser, _ := c.getUserData(dbUser.Uid)
+	var dbfuser struct {
+		User []dataModels.User
+	}
+	if err := json.Unmarshal(fulluser, &dbfuser); err != nil {
+		log.Print(err)
+	}
+
+	res = response.Response{
+		Data:    dbfuser.User[0],
+		Message: "ویرایش اطلاعات با موفقیت انجام شد",
+		State:   1,
+		Code:    1,
 	}
 	return res
 	//UUID := ctx.GetHeader("X-USER")
@@ -130,6 +157,12 @@ func (c *UserController) Put(ctx iris.Context) response.Response {
 func (c *UserController) Delete(ctx iris.Context) {
 }
 
+//
+
+//
+// ────────────────────────────────────────────────────────────────────── II ──────────
+//   :::::: S E S S I O N   S E T T I N G : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────
 //
 
 //PostLogin : sign in
@@ -213,51 +246,35 @@ func (c *UserController) PostLogin(ctx iris.Context) response.Response { // must
 	return res
 }
 
+//
+// ────────────────────────────────────────────────────────────────────── III ──────────
+//   :::::: P R O F I L E   A N D   E X T : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────
+//
+
 //PostProfile : Update User Profile
 func (c *UserController) PostProfile(ctx iris.Context) response.Response {
-	var req dataModels.User // make(map[string]string)
-	ctx.ReadJSON(&req)
-	var res response.Response
+
+	acl := services.Acl()
+	res := services.Authentication(ctx, acl.ACLDef["User"], true)
+	if res.Code < 1 {
+		return res
+	}
 
 	myg := db.NewDgraphTrasn()
-	/*********** CKECK TOKEN**********/
-	q := fmt.Sprintf(`
-	 	{
-	 		user(func: uid("%s")) @filter(eq(token,"%s")) {
-				uid
-	 		}
-	 	}
-		 `, req.Uid, req.Token)
 
-	dbresstr, err := myg.Query(q)
+	var dbUser dataModels.User
+	ctx.ReadJSON(&dbUser)
+
+	dbUser.Uid = ctx.GetHeader("X-USER")
+
+	dbqry, _ := json.Marshal(dbUser)
+	_, _, err := myg.Mutate(dbqry)
 	if res.HandleErr(err) {
 		return res
 	}
-	//var dbres dataModels.User
-	var dbres struct {
-		User []dataModels.User
-	}
-	if err := json.Unmarshal(dbresstr, &dbres); err != nil {
-		log.Print(err)
-	}
 
-	if dbres.User[0].Uid != req.Uid {
-		res = response.Response{
-			State:   -1,
-			Message: "نشست کاربری شما از بین رفته است.",
-			Code:    -1,
-		}
-		return res
-	}
-
-	/*******************/
-	dbUser := dbres.User[0]
-	dbUser = req
-
-	dbqry, _ := json.Marshal(dbUser)
-	myg.Mutate(dbqry)
-
-	fulluser, _ := c.getUserData(dbres.User[0].Uid)
+	fulluser, _ := c.getUserData(dbUser.Uid)
 	var dbfuser struct {
 		User []dataModels.User
 	}
@@ -275,6 +292,7 @@ func (c *UserController) PostProfile(ctx iris.Context) response.Response {
 }
 
 //GetBy : get all data of user		- 	uid user id
+//TODO : return Response vs []byte
 func (c *UserController) getUserData(Uid string) ([]byte, error) {
 	//res,c := services.BasicOuth()
 	myg := db.NewDgraphTrasn()

@@ -66,22 +66,23 @@ return{
     numberOfChoices:0,
 }
 },
-/*
-editing: true | false ==> editing a question or add new one?
-item2edit => Which item is being edited?
-exam => Exam object
 
 props:{
-editing:Boolean,
-item2edit:Object,
-exam:Object
-},*/
+    User:null,
+    BaseURL:String,
+    ACL:Object,
+},
 mounted(){
-    if(this.editing){
-        this.editingQuestion= Object.assign({},item2edit)
-    }else
-        this.editingQuestion= Object.assign({},this.emptyQuestion)
-    this.numberOfChoices=(this.editingQuestion.choices.length);
+    if(this.User == null){
+        this.$router.replace('/login/');
+        return
+    }else{
+        if(this.editing){
+            this.editingQuestion= Object.assign({},item2edit)
+        }else
+            this.editingQuestion= Object.assign({},this.emptyQuestion)
+        this.numberOfChoices=(this.editingQuestion.choices.length);
+    }
 },
 methods:{
     optionAdded(){
@@ -108,7 +109,7 @@ this.numberOfChoices=lengthOfChoices;
     submitQuestion(){
         console.log(this.editingQuestion);
         //this.editingQuestion.choices=this.editingQuestion.choices.map(x=>Number.parseInt())
-        this.axios.post(`http://localhost:9090/addquestion/${0}`,JSON.stringify(this.editingQuestion)).then(res=>{
+        this.axios.post(BaseURL+`/addquestion/${0}`,JSON.stringify(this.editingQuestion)).then(res=>{
             console.log(res);
         });
     }

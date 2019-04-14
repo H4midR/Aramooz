@@ -48,18 +48,22 @@ return{
     emptyChoice:{
             num:0,
             title:'',
-            value:'0'
+            value:0
         },
     emptyQuestion:{
         //eid:exam.id,
         
-        title:null,
-        qnum:null,
+        title:'زوج',
+        qnum:'1',
         ltr:false,
         choices:[{
             num:1,
-            title:'',
-            value:false
+            title:'1',
+            value:0,
+        },{
+            num:2,
+            title:'2',
+            value:1,
         }]
     },
     editingQuestion:{},
@@ -68,13 +72,13 @@ return{
 },
 
 props:{
-    User:null,
+    User:Object,
     BaseURL:String,
     ACL:Object,
 },
 mounted(){
     if(this.User == null){
-        this.$router.replace('/login/');
+        this.$router.replace('/login');
         return
     }else{
         if(this.editing){
@@ -109,7 +113,7 @@ this.numberOfChoices=lengthOfChoices;
     submitQuestion(){
         console.log(this.editingQuestion);
         //this.editingQuestion.choices=this.editingQuestion.choices.map(x=>Number.parseInt())
-        this.axios.post(BaseURL+`/addquestion/${0}`,JSON.stringify(this.editingQuestion)).then(res=>{
+        this.axios.post(this.BaseURL+`/addquestion/${this.User.uid}/`,JSON.stringify(this.editingQuestion)).then(res=>{
             console.log(res);
         });
     }

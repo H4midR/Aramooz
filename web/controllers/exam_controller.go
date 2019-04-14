@@ -69,8 +69,9 @@ func (c *ExamController) GetList() response.Response {
 	q := fmt.Sprintf(`
 		{
 			exams(func:eq(kind,"Exam")){
+				_predicate_
 				expand(_all_)
-			  }
+			}
 		}
 		`)
 

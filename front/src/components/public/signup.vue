@@ -2,7 +2,14 @@
     <v-container @keyup.enter="signup" fluid full-height>
         <v-layout fluid  justify-space-around align-center>
             <v-flex xs12 md5>
-                <v-card xs12 md5>
+                <v-card xs12 md5 v-if="User != null && resMessage == null">
+                    <v-alert value="true" type="success" outline>
+                    {{ User.name }} عزیز: 
+                    قبلا وارد سایت شده اید
+                    <v-progress-linear indeterminate color="success" class="mb-0" />
+                    </v-alert>
+                </v-card>
+                <v-card xs12 md5 v-if="User == null">
                     <v-toolbar color="pink darken-3" dark>
                         فرم عضویت
                         <v-spacer></v-spacer>
@@ -39,9 +46,9 @@
                         </v-tooltip>
                     </v-card-actions>
                 
-                    <v-snackbar v-model="snackbar" color="success" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" >
+                    <v-snackbar v-model="snackbar" :color="snackbarColor" top="top" right="right" timeout="5000">
                     {{ response }}
-                    <v-btn right flat fab @click="snackbar = false">
+                    <v-btn right flat fab @click="snackbar = false" :loading="redirectBtnLoging">
                         <v-icon>close</v-icon>
                     </v-btn>
                     </v-snackbar>
@@ -59,11 +66,9 @@ export default {
         name:null,
         response:null,
         btnLoading: false,
+        redirectBtnLoging:false,
         snackbar: false,
-        y: 'top',
-        x: 'right',
-        mode: '',
-        timeout: 4000,
+        snackbarColor: null,
         showPass: false,
         rules: {
           required: value => !!value || 'اجباری!!',
@@ -87,10 +92,27 @@ export default {
                 name:this.name,
             })).then(res=>{
               this.response=res.data.Message
+              if(res.data.Code > 0){
+                  this.snackbarColor = "success";
+                  this.redirectBtnLoging = true;
+                  setTimeout(() => this.$router.replace("/login") , 3000);
+              }else{
+                  this.snackbarColor = "warning";
+              }
               this.snackbar = true
               this.btnLoading = false
             })
         }
-    }
+    }, // methods
+    props:{
+        User:Object,
+        BaseURL:String,
+        ACL:Object,
+    }, //props
+    mounted(){
+        if (this.User != null ){
+        setTimeout(() => this.$router.replace("/") , 1500);
+        }
+    } //mounted
 }
 </script>

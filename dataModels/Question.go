@@ -6,11 +6,11 @@ type Choice struct {
 	Title string `json:"title,omitempty" form:"Title"`
 	Value bool   `json:"value,omitempty" form:"Value"`
 }
+
 type Question struct {
 	Uid     string   `json:"uid,omitempty" from:"Uid"`
 	Title   string   `json:"title,omitempty" form:"Title"`
-	Qnum    int      `json:"qnum,omitempty" form:"Qnum"`
+	Qnum    string   `json:"qnum,omitempty" form:"Qnum"`
 	Ltr     bool     `json:"ltr,omitempty" form:"Ltr"`
-	Eid     int      `json:"eid,omitempty" form:"Eid"`
 	Choices []Choice `json:"choices,omitempty" form:"Choices"`
 }

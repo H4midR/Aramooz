@@ -55,7 +55,8 @@ func (c *UserController) Post(ctx iris.Context) response.Response {
 	//
 	// ──────────────────────────────── CHEACK NO OTHER USER WITH THE SAME MOBILE ─────
 	//
-
+	res.Data=req
+	return res
 	m := db.NewDgraphTrasn()
 	if req.Mobile == "" || req.Mobile == "0" {
 		res.Data = req

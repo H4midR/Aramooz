@@ -8,6 +8,10 @@ package controllers
 import (
 	"github.com/kataras/iris"
 
+	
+	"fmt"
+	
+
 	db "Aramooz/dataBaseServices"
 	"Aramooz/dataModels"
 	"Aramooz/services/response"
@@ -54,14 +58,21 @@ func (c *ExamController) Post(ctx iris.Context) response.Response {
 	res.Data = Uids
 	return res
 }
-//
-// ──────────────────────────────────────────────────────── II ──────────
-//   :::::: Q U E S T I O N : :  :   :    :     :        :          :
-// ──────────────────────────────────────────────────────────────────
-//
 
-//
-// ──────────────────────────────────────────────────── III ──────────
-//   :::::: C H O I C E : :  :   :    :     :        :          :
-// ──────────────────────────────────────────────────────────────
-//
+
+//GetBy : get all data of Exam		- 	uid exam id
+func (c *ExamController) getExamData(UID string) ([]byte, error) {
+	//res,c := services.BasicOuth()
+	myg := db.NewDgraphTrasn()
+	q := fmt.Sprintf(`
+		{
+			exam(func: uid(%s)) @filter(eq(kind,"Exam")) {
+				uid
+				expand(_all_)
+				
+			}
+		}
+		`, UID)
+
+	return myg.Query(q)
+}

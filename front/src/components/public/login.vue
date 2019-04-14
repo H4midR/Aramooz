@@ -1,10 +1,10 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container @keyup.enter="login" fluid fill-height>
      <v-layout fluid  justify-space-around align-center>
       <v-flex xs12 md5 >
-        <!--<v-layout fluid wrap> -->
           <v-card xs12 md5>
 
+              <v-alert v-model="alertStatus" :type="alertColor" outline dismissible>{{resMessage}}</v-alert>
               <v-toolbar color="accent" dark>
                 فرم ورود
                 <v-spacer></v-spacer>
@@ -20,7 +20,7 @@
 
             <v-card-text>
                <v-flex xs11>
-            <v-text-field v-model="phone" label="موبایل" ></v-text-field>
+            <v-text-field v-model="mobile" label="موبایل" ></v-text-field>
           </v-flex>
           <v-flex xs11>
             <v-text-field v-model="password" type="password" label="کلمه عبور" ></v-text-field>
@@ -29,19 +29,15 @@
             <v-divider></v-divider>
             <v-card-actions>
               <v-tooltip top>
-                <v-btn @click="login" color="success" slot="activator" flat icon >
-                  <v-icon>mdi-login</v-icon>
+                <v-btn @click="login" color="success" slot="activator" flat >
+                  <v-icon>mdi-login</v-icon> ورود
                 </v-btn>
                 <span>
-                  تایید
+                  ورود
                 </span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
-
-
-
-        <!-- </v-layout>-->
       </v-flex>
     </v-layout>
   </v-container>
@@ -51,22 +47,36 @@
 export default {
   data(){return{
     axios:require('axios'),
-    phone:null,
+    mobile:null,
     password:null,
 
-  }},
+    alertStatus:false,
+    alertColor:"success",
+    resMessage:null,
+
+  }},//data
   methods: {
     login(){
-      this.axios.post("http://localhost:9090/user/login",JSON.stringify({
-        mobile:this.phone,
+      this.axios.post( this.BaseURL +"/user/login",JSON.stringify({
+        mobile:this.mobile,
         password:this.password
       })).then(res=>{
-        if(res.data.Code >0 ){
+        this.resMessage = res.data.Message;
+        this.alertStatus = true;
+        if(res.data.Code > 0 ){
+          this.alertColor = "success";
           this.$emit("Login",res.data.Data);
-          this.$router.replace("/");
+          setTimeout(() => this.$router.replace("/") , 1500);
+        }else{
+          this.alertColor = "warning";
         }
       })
-    }
-  },
+    }, //login
+  }, // methods
+  props:{
+    User:Object,
+    BaseURL:String,
+    ACL:Object,
+  }, //props
 }
 </script>

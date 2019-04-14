@@ -161,7 +161,7 @@ func (c *UserController) PostLogin(ctx iris.Context) response.Response { // must
 	if len(dbres.User) < 1 {
 		res = response.Response{
 			State:   -1,
-			Message: "Invalid Username Or Password",
+			Message: "شماره موبایل یا کلمه عبور وارد شده نادرست است",
 			Code:    -1,
 		}
 		return res
@@ -204,7 +204,7 @@ func (c *UserController) PostLogin(ctx iris.Context) response.Response { // must
 	}
 	res = response.Response{
 		State:   -1,
-		Message: "Invalid Username Or Password",
+		Message: "شماره موبایل یا کلمه عبور وارد شده نادرست است",
 		Code:    -1,
 	}
 	return res

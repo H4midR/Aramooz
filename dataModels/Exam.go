@@ -20,6 +20,7 @@ type Exam struct {
 	NegativeScore         string     `json:"negativeScore" form:"negativeScore"`
 	Kind                  string     `json:"kind,omitempty"`
 	Questions             []Question `json:"question,omitempty"`
+	Predicate		[]string	`json:"_predicate_,omitempty"`
 }
 
 const ExamType = "Exam"

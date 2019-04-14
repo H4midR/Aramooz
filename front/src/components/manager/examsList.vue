@@ -1,19 +1,20 @@
 <template>
+
 <v-container>
-{{post}}
-</v-container>
-<!--
-  <v-data-table :headers="headers" :items="post" class="elevation-1">
+  {{post[0]['_predicate_']}}
+
+  <v-data-table :headers="post[0]['_predicate_']" :items="post" class="elevation-1">
     <template slot="items" slot-scope="props">
       <td>{{ props.item.name }}</td>
-      <td class="text-xs-right">{{ props.item.examTitle }}</td>
-      <td class="text-xs-right">{{ props.item.examCost }}</td>
+      <td class="text-xs-right">{{ props.item.Title }}</td>
+      <td class="text-xs-right">{{ props.item.Cost }}</td>
       <td class="text-xs-right">{{ props.item.selectCourse }}</td>
       <td class="text-xs-right">{{ props.item.numberofFinalQuestion }}</td>
-      <td class="text-xs-right">{{ props.item.examDuration }}</td>
+      <td class="text-xs-right">{{ props.item.duration }}</td>
     </template>
   </v-data-table>
-  -->
+</v-container>
+
 </template>
 
 <script>
@@ -37,7 +38,7 @@
     },
     methods:{
       fetchData () {
-      this.axios.get('http://localhost:9090/exam/list').then(response => (this.post = response))
+      this.axios.get('http://localhost:9090/exam/list').then(response => (this.post = response.data.Data))
       }
 
     }

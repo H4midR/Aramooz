@@ -5,7 +5,6 @@ type Choice struct {
 	Num   int    `json:"num,omirempty" form:"Num"`
 	Title string `json:"title,omitempty" form:"Title"`
 	Value int    `json:"value,omitempty" form:"Value"`
-	Kind  string `choices`
 }
 
 type Question struct {

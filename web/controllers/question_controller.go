@@ -24,8 +24,6 @@ func (c *QuestionController) PostBy(userId string, ctx iris.Context) response.Re
 	if res.Code < 1 {
 		return res
 	}
-	res.Message = "1"
-	return res
 	dbwork := db.NewDgraphTrasn()
 	query, err := json.Marshal(req)
 	res.HandleErr(err)
@@ -37,8 +35,6 @@ func (c *QuestionController) PostBy(userId string, ctx iris.Context) response.Re
 	if res.Code < 1 {
 		return res
 	}
-	res.Data = uids
-	return res
 	qu := `{
 			set{
 				<` + userId + `> <uid> <` + uids["blank-0"] + `>

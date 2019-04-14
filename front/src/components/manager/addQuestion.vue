@@ -113,7 +113,7 @@ this.numberOfChoices=lengthOfChoices;
     submitQuestion(){
         console.log(this.editingQuestion);
         //this.editingQuestion.choices=this.editingQuestion.choices.map(x=>Number.parseInt())
-        this.axios.post(this.BaseURL+`/addquestion/${this.User.uid}/`,JSON.stringify(this.editingQuestion)).then(res=>{
+        this.axios.post(this.BaseURL+'/addquestion/'+this.User.uid,JSON.stringify(this.editingQuestion)).then(res=>{
             console.log(res);
         });
     }

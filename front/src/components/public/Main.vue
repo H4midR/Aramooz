@@ -74,6 +74,7 @@ export default {
     data(){
         return{
             title: "آزمون یار", //Page or Site Title
+
             menus:[
                 {
                     title:"آشنایی با ما",
@@ -92,6 +93,26 @@ export default {
                         },
                     ],
                 }, //Menu Item
+                
+            ], //Menus
+            
+            Exams: [
+                { title: 'آزمون یک',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test1.jpg"), flex: 3,uid: "0x1",  show:false, },
+                { title: 'آزمون دو',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test2.jpg"), flex: 3,uid: "0x2",  show:false, },
+                { title: 'آزمون سه',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test3.jpg"), flex: 3,uid: "0x3",  show:false, },
+                { title: 'آزمون چهار',  desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test4.jpg"), flex: 3,uid: "0x4",  show:false, },
+            ], //Exams
+
+        }
+    }, //Data
+    props:{
+        User:Object,
+        BaseURL:String,
+        ACL:Object,
+    }, //props
+    mounted(){
+        if (this.User == null) {
+            this.menus.push(
                 {
                     title:"ورود و عضویت",
                     icon:"person",
@@ -108,17 +129,30 @@ export default {
                             url:"signup",
                         },
                     ],
-                }//Menu Item
-            ], //Menus
-            Exams: [
-                { title: 'آزمون یک',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test1.jpg"), flex: 3,uid: "0x1",  show:false, },
-                { title: 'آزمون دو',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test2.jpg"), flex: 3,uid: "0x2",  show:false, },
-                { title: 'آزمون سه',    desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test3.jpg"), flex: 3,uid: "0x3",  show:false, },
-                { title: 'آزمون چهار',  desc:"توضیحات آزمون به شرح ذیل می باشد. شما می توانید در این آزمون شرکت کنید، به شرط اینکه بچه خوبی باشید.",    src: require("@/assets/images/test4.jpg"), flex: 3,uid: "0x4",  show:false, },
-            ], //Exams
-
+                },
+            );
+        } else {
+            this.menus.push(
+                {
+                    title:this.User.name,
+                    icon:"person",
+                    url:"",
+                    child:[
+                        {
+                            title:"پروفایل",
+                            icon:"account_circle",
+                            url:"profile",
+                        },
+                        {
+                            title:"خروج",
+                            icon:"mdi-login red--text",
+                            url:"logout",
+                        },
+                    ],
+                }
+            );
         }
-    }
+    }, //munted
 }
 </script>
 

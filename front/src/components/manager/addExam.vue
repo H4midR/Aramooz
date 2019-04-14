@@ -19,10 +19,10 @@
                         <v-flex xs12 sm8 md8 lg8>
                             <v-layout>
                                 <v-flex xs12 md4>
-                                    <v-text-field label="عنوان آزمون" v-model="ExamData.title" style="padding:10px"></v-text-field>
+                                    <v-text-field label="عنوان آزمون" v-model="ExamData.examTitle" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
-                                    <v-text-field label="هزینه شرکت در آزمون" v-model="ExamData.cost" style="padding:10px"></v-text-field>
+                                    <v-text-field label="هزینه شرکت در آزمون" v-model="ExamData.examCost" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
                                     
@@ -38,7 +38,7 @@
                                     <v-text-field label="تعداد سوالات نهایی" v-model="ExamData.numberofFinalQuestion" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
-                                    <v-text-field label="مدت آزمون" v-model="ExamData.duration" style="padding:10px"></v-text-field>
+                                    <v-text-field  type="number" mask="##" label="مدت آزمون" v-model="ExamData.examDuration" style="padding:10px"></v-text-field>
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>
@@ -118,30 +118,34 @@ export default {
     data: () => ({
         axios:require("axios"),
         ExamData:{
-            title:null,
-            cost:null,
-            examStatus:false,
-            startDate:null,
-            endDate:null,
-            startTime:null,
-            endTime:null,
-            specificTime:false,
-            randomShow:false,
-            negativeScore:false,
-            beforeMessage:null,
-            afterMessage:null,
-            duration:null,
-            multiCourse:false,
-            selectCourse:null,
-            numberofFinalQuestion:null,
+            title:'',
+            cost:'',
+            examStatus:'',
+            startDate:'',
+            endDate:'',
+            startTime:'',
+            endTime:'',
+            specificTime:'',
+            randomShow:'',
+            negativeScore:'',
+            beforeMessage:'',
+            afterMessage:'',
+            duration:'',
+            multiCourse:'',
+            selectCourse:'',
+            numberofFinalQuestion:'',
             
         },
         response:null,
-        date: '1397/02/02'      
+        date: '1397/02/02',
+        rules :{
+            
+            //maxDuration: v >= v.length <= 2 || 'طول بیشتر از 2 مجار نمیباشد'
+        }  
     }),
     methods:{
         addExam(){
-            this.axios.post("http://localhost:9090/addExam",JSON.stringify(this.ExamData)).then(res=>{this.response = res.data.messages})
+            this.axios.post("http://localhost:9090/exam",JSON.stringify(this.ExamData)).then(res=>{this.response = res.data.messages})
            
         }
     },

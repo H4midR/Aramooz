@@ -4,7 +4,7 @@
             <v-flex xs12 md5>
                 <v-card xs12 md5 v-if="User != null && resMessage == null">
                     <v-alert value="true" type="success" outline>
-                    {{ User.name }} عزیز: 
+                    {{ User.name }} عزیز:
                     قبلا وارد سایت شده اید
                     <v-progress-linear indeterminate color="success" class="mb-0" />
                     </v-alert>
@@ -24,6 +24,7 @@
                     </v-toolbar>
 
 
+          <v-form ref="ProfileForm" >
                     <v-card-text>
                         <v-flex xs11>
                             <v-text-field :rules="[rules.required]" hint="نام خود را با حروف فارسی وارد نمایید" v-model="name" type="text" label="نام و نام خانوادگی"></v-text-field>
@@ -45,7 +46,7 @@
                             <span>ثبت نام در سایت</span>
                         </v-tooltip>
                     </v-card-actions>
-                
+                </v-form>
                     <v-snackbar v-model="snackbar" :color="snackbarColor" top="top" right="right" timeout="5000">
                     {{ response }}
                     <v-btn right flat fab @click="snackbar = false" :loading="redirectBtnLoging">
@@ -78,6 +79,11 @@ export default {
     }},
     methods:{
         signup(){
+          if(!this.$refs.ProfileForm.validate())
+          return
+
+
+
             this.btnLoading = true
             /*
             required
@@ -85,7 +91,7 @@ export default {
             mobile
             password
             */
-           
+
             this.axios.post("http://localhost:9090/user",JSON.stringify({
                 mobile:this.mobile,
                 password:this.password,

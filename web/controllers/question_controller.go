@@ -20,12 +20,17 @@ func (c *QuestionController) PostBy(userId string, ctx iris.Context) response.Re
 	var res response.Response
 	req.Kind = dataModels.QuestionType
 	err := ctx.ReadJSON(&req)
+	Freq := dataModels.Exam{
+		Uid: userId, //TODO: ExamUID from form
+
+	}
+	Freq.Questions = append(Freq.Questions, req)
 	res.HandleErr(err)
 	if res.Code < 1 {
 		return res
 	}
 	dbwork := db.NewDgraphTrasn()
-	query, err := json.Marshal(req)
+	query, err := json.Marshal(Freq)
 	res.HandleErr(err)
 	if res.Code < 1 {
 		return res
@@ -35,21 +40,34 @@ func (c *QuestionController) PostBy(userId string, ctx iris.Context) response.Re
 	if res.Code < 1 {
 		return res
 	}
-	qu := `{
-			set{
-				<` + userId + `> <uid> <` + uids["blank-0"] + `>
-			}
-		}`
-	query2, err2 := json.Marshal(qu)
-	res.HandleErr(err2)
+
+	/*r1 := fmt.Sprintf(`<%s> <owner> <%s> .
+					`, userId, uids["blank-0"])
+	dbwork.MutateRDF([]byte(r1), "set")
+	*/
+	/*
+		addOwner := `{
+					set{
+						<` + userId + `> <owner> <` + uids["blank-0"] + ` >
+						}
+					}`
+	*/
+	addOwner := `{
+				"uid" : "` + userId + `"
+				"owner" :{
+					"uid": "` + uids["blank-0"] + `"
+				}
+			}`
+	addQuery, err := json.Marshal(addOwner)
+	res.HandleErr(err)
 	if res.Code < 1 {
 		return res
 	}
-	_, uids2, err2 := dbwork.Mutate(query2)
-	res.HandleErr(err2)
+	_, finalUids, err := dbwork.Mutate(addQuery)
+	res.HandleErr(err)
 	if res.Code < 1 {
 		return res
 	}
-	res.Data = uids2
+	res.Data = finalUids
 	return res
 }

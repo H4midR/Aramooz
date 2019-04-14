@@ -19,10 +19,10 @@
                         <v-flex xs12 sm8 md8 lg8>
                             <v-layout>
                                 <v-flex xs12 md4>
-                                    <v-text-field label="عنوان آزمون" v-model="ExamData.title" style="padding:10px"></v-text-field>
+                                    <v-text-field label="عنوان آزمون" v-model="ExamData.examTitle" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
-                                    <v-text-field label="هزینه شرکت در آزمون" v-model="ExamData.cost" style="padding:10px"></v-text-field>
+                                    <v-text-field label="هزینه شرکت در آزمون" v-model="ExamData.examCost" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
                                     
@@ -38,7 +38,7 @@
                                     <v-text-field label="تعداد سوالات نهایی" v-model="ExamData.numberofFinalQuestion" style="padding:10px"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md4>
-                                    <v-text-field  type="number" mask="##" label="مدت آزمون" v-model="ExamData.duration" style="padding:10px"></v-text-field>
+                                    <v-text-field  type="number" mask="##" label="مدت آزمون" v-model="ExamData.examDuration" style="padding:10px"></v-text-field>
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>

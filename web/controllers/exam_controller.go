@@ -28,7 +28,9 @@ type ExamController struct{}
 //
 func (c *ExamController) Options(ctx iris.Context) {}
 
-func (c *ExamController) Get(ctx iris.Context) {}
+func (c *ExamController) Get() string{
+	return "Hello" ;
+}
 
 func (c *ExamController) Put(ctx iris.Context)    {}
 
@@ -61,18 +63,26 @@ func (c *ExamController) Post(ctx iris.Context) response.Response {
 
 
 //GetBy : get all data of Exam		- 	uid exam id
-func (c *ExamController) getExamData(UID string) ([]byte, error) {
+func (c *ExamController) GetList() response.Response {
 	//res,c := services.BasicOuth()
+	var res response.Response
 	myg := db.NewDgraphTrasn()
 	q := fmt.Sprintf(`
 		{
-			exam(func: uid(%s)) @filter(eq(kind,"Exam")) {
-				uid
+			exams(func:eq(kind,"Exam")){
 				expand(_all_)
-				
-			}
+			  }
 		}
-		`, UID)
+		`)
 
-	return myg.Query(q)
+	dbres,err := myg.Query(q)
+	var dbexams struct{
+		exams []dataModels.Exam
+	}
+	err = json.Unmarshal(dbres,&dbexams)
+	if res.HandleErr(err) {
+		return res
+	}
+	res.Data=dbexams
+	return res
 }

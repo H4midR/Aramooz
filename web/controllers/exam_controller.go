@@ -8,7 +8,6 @@ package controllers
 import (
 	"github.com/kataras/iris"
 
-	
 	"fmt"
 	
 
@@ -76,13 +75,32 @@ func (c *ExamController) GetList() response.Response {
 		`)
 
 	dbres,err := myg.Query(q)
-	var dbexams struct{
-		exams []dataModels.Exam
-	}
-	err = json.Unmarshal(dbres,&dbexams)
 	if res.HandleErr(err) {
 		return res
+		}
+	var dbexams struct{
+		Exams []dataModels.Exam `json:"exams"`
 	}
-	res.Data=dbexams
-	return res
-}
+	/*err = json.Unmarshal(dbres,&dbexams)
+	if res.HandleErr(err) {
+		return res
+	}*/
+	
+	
+	if err := json.Unmarshal(dbres, &dbexams); res.HandleErr(err) {
+		return res
+		}
+	if len(dbexams.Exams) < 1 {
+		res = response.Response{
+			State:   -1,
+			Message: "اطلاعات بدرستی بارگذاری نشده است",
+			Code:    -1,
+			}
+		return res
+		}
+		res.Code=1
+		res.Message="داده های امتحان"
+		res.State=1
+		res.Data = dbexams.Exams
+		return res
+	}

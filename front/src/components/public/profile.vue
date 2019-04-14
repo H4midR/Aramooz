@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
-        
+
         <v-snackbar v-model="snackbar" :color="snackbarColor" top="top" right="right" timeout="5000">
         {{ response }}
         <v-btn right flat fab @click="snackbar = false" :loading="redirectBtnLoging">
@@ -23,13 +23,13 @@
         <v-card class="v-card-profile" flat>
           <v-avatar class="mx-auto d-block" size="130">
             <img src="https://cdn.vuetifyjs.com/images/cards/girl.jpg">
-             
+
           </v-avatar>
           <v-card-text class="text-xs-center">
             <h6 class="category text-gray font-weight-thin mb-3">برنامه نویس</h6>
             <h4 class="card-title font-weight-light">{{User.name}}</h4>
             <p class="card-description font-weight-light" v-html="User.bio"></p>
-            
+
           </v-card-text>
         </v-card>
       </v-flex>
@@ -63,7 +63,7 @@
           </v-form>
         </v-card>
       </v-flex>
-      
+
     </v-layout>
   </v-container>
 </template>
@@ -71,7 +71,15 @@
 <script>
 export default {
   data(){return{
-      axios: require('axios'),
+      axios:require('axios').create({
+              baseURL: this.BaseURL+'/',
+              timeout: 1000,
+              withCredentials: false,
+              headers:{
+                'Authorization-Token':this.User.token,
+                'X-USER':this.User.uid
+              }
+            }),
       name: this.User.name,
       mobile: this.User.mobile,
       email: this.User.email,
@@ -87,13 +95,12 @@ export default {
 
     },
       update(){
-          this.axios.post(this.BaseURL +"/user/profile",JSON.stringify({
+          this.axios.put("user",JSON.stringify({
               name: this.name,
               mobile: this.mobile,
               email: this.email,
               address: this.address,
               bio: this.bio,
-              uid: this.User.uid,
               token: this.User.token,
             })).then(res=>{
               this.response = res.data.Message;
@@ -124,6 +131,6 @@ export default {
 .v-card-profile{
     background:none !important;
     border:none !important;
-    
+
 }
 </style>

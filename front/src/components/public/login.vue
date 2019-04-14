@@ -2,9 +2,18 @@
   <v-container @keyup.enter="login" fluid fill-height>
      <v-layout fluid  justify-space-around align-center>
       <v-flex xs12 md5 >
-          <v-card xs12 md5>
+          <v-card xs12 md5 v-if="User != null && resMessage == null">
+            <v-alert value="true" type="success" outline>
+               قبلا وارد سایت شده اید
+              <v-progress-linear indeterminate color="success" class="mb-0" />
+            </v-alert>
+          </v-card>
+          <v-alert v-model="alertStatus" :type="alertColor" outline dismissible>
+            {{resMessage}}
+            <v-progress-linear v-if="alertColor == 'success' " indeterminate color="success" class="mb-0" />
+          </v-alert>
+          <v-card xs12 md5 v-if="User == null">
 
-              <v-alert v-model="alertStatus" :type="alertColor" outline dismissible>{{resMessage}}</v-alert>
               <v-toolbar color="accent" dark>
                 فرم ورود
                 <v-spacer></v-spacer>
@@ -78,5 +87,10 @@ export default {
     BaseURL:String,
     ACL:Object,
   }, //props
+  mounted(){
+    if (this.User != null ){
+      setTimeout(() => this.$router.replace("/") , 1500);
+    }
+  }
 }
 </script>

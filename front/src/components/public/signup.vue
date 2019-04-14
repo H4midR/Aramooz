@@ -2,7 +2,14 @@
     <v-container @keyup.enter="signup" fluid full-height>
         <v-layout fluid  justify-space-around align-center>
             <v-flex xs12 md5>
-                <v-card xs12 md5>
+                <v-card xs12 md5 v-if="User != null && resMessage == null">
+                    <v-alert value="true" type="success" outline>
+                    {{ User.name }} عزیز: 
+                    قبلا وارد سایت شده اید
+                    <v-progress-linear indeterminate color="success" class="mb-0" />
+                    </v-alert>
+                </v-card>
+                <v-card xs12 md5 v-if="User == null">
                     <v-toolbar color="pink darken-3" dark>
                         فرم عضویت
                         <v-spacer></v-spacer>
@@ -96,6 +103,16 @@ export default {
               this.btnLoading = false
             })
         }
-    }
+    }, // methods
+    props:{
+        User:Object,
+        BaseURL:String,
+        ACL:Object,
+    }, //props
+    mounted(){
+        if (this.User != null ){
+        setTimeout(() => this.$router.replace("/") , 1500);
+        }
+    } //mounted
 }
 </script>

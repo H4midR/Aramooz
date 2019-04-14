@@ -8,7 +8,6 @@ package controllers
 import (
 	"github.com/kataras/iris"
 
-	"log"
 	"fmt"
 	
 
@@ -80,7 +79,7 @@ func (c *ExamController) GetList() response.Response {
 		return res
 		}
 	var dbexams struct{
-		Exams []dataModels.Exam `json:"exam"`
+		Exams []dataModels.Exam `json:"exams"`
 	}
 	/*err = json.Unmarshal(dbres,&dbexams)
 	if res.HandleErr(err) {
@@ -102,5 +101,6 @@ func (c *ExamController) GetList() response.Response {
 		res.Code=1
 		res.Message="داده های امتحان"
 		res.State=1
+		res.Data = dbexams.Exams
 		return res
 	}

@@ -1,7 +1,25 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
-      <v-flex xs12 md4>
+        
+        <v-snackbar v-model="snackbar" :color="snackbarColor" top="top" right="right" timeout="5000">
+        {{ response }}
+        <v-btn right flat fab @click="snackbar = false" :loading="redirectBtnLoging">
+            <v-icon>close</v-icon>
+        </v-btn>
+        </v-snackbar>
+
+
+      <v-flex xs12 md5  v-if="User == null">
+        <v-card xs12 md5>
+            <v-alert value="true" type="red" outline>
+            دسترسی شما به این صفحه مجاز نمی باشد!!
+            <v-progress-linear indeterminate color="red" class="mb-0" />
+            </v-alert>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 md4 v-if="User != null">
         <v-card class="v-card-profile" flat>
           <v-avatar class="mx-auto d-block" size="130">
             <img src="https://cdn.vuetifyjs.com/images/cards/girl.jpg">
@@ -9,43 +27,34 @@
           </v-avatar>
           <v-card-text class="text-xs-center">
             <h6 class="category text-gray font-weight-thin mb-3">برنامه نویس</h6>
-            <h4 class="card-title font-weight-light">مریم پهلون</h4>
-            <p class="card-description font-weight-light">...</p>
+            <h4 class="card-title font-weight-light">{{User.name}}</h4>
+            <p class="card-description font-weight-light" v-html="User.bio"></p>
             
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 md8>
+      <v-flex xs12 md8 v-if="User != null">
         <v-card color="" title="Edit Profile" text="Complete your profile">
-          <v-form>
+          <v-form >
             <v-container py-0>
               <v-layout wrap>
                 <v-flex xs12 md4 >
-                  <v-text-field label="نام و نام خانوادگی" disabled/>
+                  <v-text-field  label="نام و نام خانوادگی" v-model="name" @keyup.enter="update"/>
                 </v-flex>
                 <v-flex xs12 md4 >
-                  <v-text-field class="purple-input" label="نام کاربری" v-model="profileData.userName"/>
+                  <v-text-field label="شماره موبایل" v-model="mobile" @keyup.enter="update"/>
                 </v-flex>
                 <v-flex xs12 md4 >
-                  <v-text-field label="ایمیل" class="purple-input" v-model="profileData.email"/>
+                  <v-text-field label="ایمیل" v-model="email" @keyup.enter="update"/>
                 </v-flex>
                 <v-flex xs12 md12>
-                  <v-text-field label="آدرس" class="purple-input" v-model="profileData.address"/>
-                </v-flex>
-                <v-flex xs12 md4>
-                  <v-text-field label="شهر" class="purple-input" v-model="profileData.city"/>
-                </v-flex>
-                <v-flex xs12 md4>
-                  <v-text-field label="کشور" class="purple-input" v-model="profileData.country"/>
-                </v-flex>
-                <v-flex xs12 md4>
-                  <v-text-field class="purple-input" label="کد پستی" type="number" v-model="profileData.postalCode"/>
+                  <v-text-field label="آدرس" v-model="address" @keyup.enter="update"/>
                 </v-flex>
                 <v-flex xs12>
-                  <v-textarea class="purple-input" label="درباره من" value="" v-model="profileData.aboutMe"/>
+                  <v-textarea label="درباره من" value="" v-model="bio" />
                 </v-flex>
                 <v-flex xs12 text-xs-right >
-                  <v-btn class="mx-0 font-weight-light" color="success">
+                  <v-btn class="mx-0 font-weight-light" color="success" @click="update">
                     به روز رسانی
                   </v-btn>
                 </v-flex>
@@ -61,30 +70,54 @@
 
 <script>
 export default {
-  data:() => ({
-      axio: require('axios'),
-      profileData:{
-          name: null,
-          userName: null,
-          email: null,
-          address: null,
-          city: null,
-          country: null,
-          postalCode: null,
-          aboutMe: null
-      },
-      response: null
-  }),
+  data(){return{
+      axios: require('axios'),
+      name: this.User.name,
+      mobile: this.User.mobile,
+      email: this.User.email,
+      address: this.User.address,
+      bio: this.User.bio,
+
+      snackbar:false,
+      snackbarColor:"success",
+      response:null,
+  }},
   methods:{
+    noActons(){
+
+    },
       update(){
-          this.axios("http://localhost:9090/user",JSON.stringify(this.profileData)).then(res=>{
-              this.response=res.data.Message
-              this.snackbar = true
-              this.btnLoading = false
+          this.axios.post(this.BaseURL +"/user/profile",JSON.stringify({
+              name: this.name,
+              mobile: this.mobile,
+              email: this.email,
+              address: this.address,
+              bio: this.bio,
+              uid: this.User.uid,
+              token: this.User.token,
+            })).then(res=>{
+              this.response = res.data.Message;
+              this.snackbar = true;
+              if(res.data.Code > 0 ){
+                this.$emit("Login",res.data.Data);
+                this.snackbarColor = "success";
+              }else{
+                this.snackbarColor = "warning";
+              }
             })
 
-      }
-  }
+      },//update
+  }, // methods
+  props:{
+    User:Object,
+    BaseURL:String,
+    ACL:Object,
+  }, //props
+  mounted(){
+    if (this.User == null ){
+      setTimeout(() => this.$router.replace("/login") , 1500);
+    }
+  }//mounted
 }
 </script>
 <style>

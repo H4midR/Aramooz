@@ -92,6 +92,6 @@ export default {
     if (this.User != null ){
       setTimeout(() => this.$router.replace("/") , 1500);
     }
-  }
+  }//mounted
 }
 </script>

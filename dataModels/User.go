@@ -11,6 +11,10 @@ type User struct {
 	Password string `json:"password,omitempty" form:"Password"`
 	ACL      string `json:"acl,omitempty" form:"Acl"`
 	Kind     string `json:"kind,omitempty"`
+
+	Email   string `json:"email,omitempty" form:"Email"`
+	Address string `json:"address,omitempty" form:"Address"`
+	Bio     string `json:"bio,omitempty" form:"Bio"`
 }
 
 const UserType = "User"

@@ -3,11 +3,12 @@ package main
 /* i javad */
 /*eslint-disable */
 import (
-	"Aramooz/dataBaseServices"
 	"Aramooz/web/controllers"
+	"time"
 
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
+	"github.com/kataras/iris/sessions"
 
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
@@ -24,6 +25,11 @@ func main() {
 	// and log the requests to the terminal.
 	app.Use(recover.New())
 	app.Use(logger.New())
+	sessionManager := sessions.New(sessions.Config{
+		Cookie:       "b502320222bfe165e6bc37db8ea466c3bad11fad72de1d54bbcfe220bb3c94c8",
+		Expires:      60 * time.Minute,
+		AllowReclaim: true,
+	})
 
 	//app.RegisterView(iris.HTML("./web/views", ".html"))
 
@@ -47,24 +53,26 @@ func main() {
 	// Method:   GET
 	// Resource: http://localhost:8080
 	app.Handle("GET", "/", func(ctx iris.Context) {
-		mg := dataBaseServices.NewDgraphTrasn()
-		q := `
-			{
-				data(func:has(name)){
-					uid
-					expand(_all_)
-				}
-			}
-			`
-		response, _ := mg.Query(string(q))
-		ctx.Write(response)
+		S := sessionManager.Start(ctx)
+		U := struct {
+			Uid  string
+			Name string
+		}{
+			Uid:  "0x213124",
+			Name: "Hamid",
+		}
+
+		S.Set("Con", U)
+		visits := S.Increment("visits", 1)
+		ctx.Writef("you visit this site %d time and %#v", S.Get("visits"), visits)
 	})
 
 	// same as app.Handle("GET", "/ping", [...])
 	// Method:   GET
 	// Resource: http://localhost:8080/ping
 	app.Get("/ping", func(ctx iris.Context) {
-		ctx.WriteString("pong")
+		S := sessionManager.Start(ctx)
+		ctx.Writef("you visit this site %d time and %#v", S.Get("visits"), S.Get("Con"))
 	})
 
 	// Method:   GET
